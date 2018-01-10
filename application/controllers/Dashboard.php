@@ -30,7 +30,7 @@ class Dashboard extends MX_Controller {
 		else
 		{
 		//$this->data['halaman']="vlogin";
-		redirect('login/index');
+		redirect('login');
 		}
 	}
 
