@@ -33,13 +33,11 @@ class Login extends CI_Controller {
             $email =  $this->input->post('email');
             $password =  $this->input->post('password');
 
+
             //panggil model
-            if($this->Login_m->login($email, $password)){
-							redirect('Dashboard');
-            }
-            else{
-                echo'ada kesalahan';
-            }
+            $this->Login_m->login($email, $password);
+						redirect('Dashboard');
+
     }
 
 	//Method untuk logout

@@ -7,12 +7,12 @@ class Dashboard extends MX_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->database();		
+		$this->load->database();
 	}
 	public function index()
 	{
 		if ($this->session->userdata('logged_in')==TRUE)
-		{	
+		{
 			if($this->session->userdata('quis')==='0' && $this->session->userdata('level')!='superadmin'){
 				redirect('kuisioner','refresh');
 			}
@@ -30,10 +30,10 @@ class Dashboard extends MX_Controller {
 		else
 		{
 		//$this->data['halaman']="vlogin";
-		redirect('login','refresh');
+		redirect('login/index');
 		}
 	}
-	
+
 
 }
 

@@ -1,6 +1,6 @@
 <?php if(!defined('BASEPATH'))exit('No direct access allowed');
 /**
-* 
+*
 */
 class Murid extends CI_Controller
 {
@@ -22,7 +22,7 @@ class Murid extends CI_Controller
 		{
 			exit('cant resubmit form');
 		}
-		if ($this->session->userdata('logged_in')==FALSE) 
+		if ($this->session->userdata('logged_in')==FALSE)
 		{
 			$this->session->set_userdata('back_url',current_url());
 			redirect('login','refresh');
@@ -34,12 +34,12 @@ class Murid extends CI_Controller
 			$this->hasil_detail($result_id);
 		}else
 		{
-			
+
 			$message='ada kesalahan';
 			$this->latihan($message);
 		}
 	}
-	
+
 	public function materi ($pesan='')
 
 	{
@@ -49,7 +49,7 @@ class Murid extends CI_Controller
 			redirect('login');
 		}
 		else {
-		
+
 				$userid=$this->session->userdata('user_id');
 				$this->data['pesan']=$pesan;
 				$this->data['doc']=$this->Kursus_m->tampil();
@@ -59,10 +59,10 @@ class Murid extends CI_Controller
 				$this->data['halaman']='vmateri';
 				$this->load->view('_murid',$this->data);
 			}
-		
+
 	}
-	
-	
+
+
 	public function latihan($message="")
 	{
 		$data=array();
@@ -134,7 +134,7 @@ class Murid extends CI_Controller
 		$this->data['no_contact_form']=TRUE;
 		$this->load->view('_murid',$this->data);
 	}
-	
+
 	public function hasil_detail($id='',$message='')
 	{
 		if(!$this->session->userdata('logged_in'))
@@ -200,5 +200,18 @@ class Murid extends CI_Controller
 			}
 		}
 	}
-	
+
+	public function profile(){
+
+				if($this->session->userdata('logged_in')!=TRUE){
+					redirect('login');
+				}
+				else {
+
+				// n2($this->data['hasils']=$this->Murid_m->saran($userid));
+						$this->data['halaman']='profile_murid';
+						$this->load->view('_murid',$this->data);
+					}
+	}
+
 }

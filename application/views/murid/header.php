@@ -230,7 +230,20 @@
 
               <b class="arrow"></b>
             </li>
+            <li class="">
+
+            </li>
           </ul>
+        </li>
+
+        <li class="">
+          <a href="<?=site_url('murid/profile');?>">
+            <i class="menu-icon fa fa-user">
+            </i>
+            <span class="menu-text">
+              Profile
+            </span>
+          </a>
         </li>
 
 
