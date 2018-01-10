@@ -13,16 +13,18 @@ class Login extends CI_Controller {
 		$this->output->set_header('Pragma: no-cache');
 		$this->output->set_header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
     }
-         
+
 	//menampilkan form login
 	public function index(){
 		if ($this->session->userdata('logged_in')==TRUE)
 			{
-				redirect('dashboard','refresh');
+				redirect('Dashboard');
+			}else{
+				$this->load->view('login/vlogin');
+
 			}
-			
-			 $this->load->view('login/vlogin');
-	
+
+
 	}
 
 	//method untuk cek login
@@ -30,16 +32,16 @@ class Login extends CI_Controller {
 
             $email =  $this->input->post('email');
             $password =  $this->input->post('password');
-             
+
             //panggil model
             if($this->Login_m->login($email, $password)){
-
+							redirect('Dashboard');
             }
             else{
                 echo'ada kesalahan';
             }
     }
-	   
+
 	//Method untuk logout
 	public function logout(){
 	   	$this->session->sess_destroy();
@@ -86,9 +88,9 @@ class Login extends CI_Controller {
 					redirect('login','refresh');
 					}
 				}else {
-					
+
 				}
-				
+
 		}
 	}
 

@@ -87,14 +87,14 @@ tr.even {
 
         <div class="navbar-buttons navbar-header pull-right" role="navigation">
           <ul class="nav ace-nav">
-            
 
 
-         
+
+
 
             <li class="light-blue">
               <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                
+
                 <span class="user-info">
                   <small>Keluar</small>
                 </span>
@@ -103,12 +103,12 @@ tr.even {
               </a>
 
               <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-                
 
-                
+
+
 
                 <li>
-                  <a href="<?=site_url()?>login/logout">
+                  <a href="<?=site_url('login/logout')?>">
                     <i class="ace-icon fa fa-power-off"></i>
                     Logout
                   </a>
@@ -171,7 +171,7 @@ tr.even {
           </li>
 
           <li class="">
-            <a href="<?=site_url()?>kursus">
+            <a href="<?=site_url('kursus')?>">
               <i class="menu-icon fa fa-desktop"></i>
               <span class="menu-text">
                Modul Materi
@@ -180,7 +180,7 @@ tr.even {
             </li>
 
             <li class="">
-            <a href="<?=site_url()?>mapel">
+            <a href="<?=site_url('mapel')?>">
               <i class="menu-icon fa fa-book"></i>
               <span class="menu-text">
                Mata Pelajaran
@@ -189,7 +189,7 @@ tr.even {
             </li>
 
             <li>
-            <a href="<?=site_url()?>kompetensi_dasar">
+            <a href="<?=site_url('kompetensi_dasar')?>">
               <i class="menu-icon fa fa-bookmark"></i>
               <span class="menu-text">
                Kompetensi Dasar
@@ -199,7 +199,7 @@ tr.even {
           </li>
 
           <li class="">
-            <a href="<?=site_url()?>indikator">
+            <a href="<?=site_url('indikator')?>">
               <i class="menu-icon fa fa-list-ul"></i>
               <span class="menu-text">
                Indikator
@@ -208,7 +208,7 @@ tr.even {
             </li>
 
             <li class="">
-            <a href="<?=site_url()?>bank_soal">
+            <a href="<?=site_url('bank_soal')?>">
               <i class="menu-icon fa fa-archive"></i>
               <span class="menu-text">
                Bank Soal
@@ -217,7 +217,7 @@ tr.even {
             </li>
 
             <li class="">
-            <a href="<?=site_url()?>latihan">
+            <a href="<?=site_url('latihan')?>">
               <i class="menu-icon fa fa-pencil"></i>
               <span class="menu-text">
                Latihan
@@ -226,7 +226,7 @@ tr.even {
             </li>
 
             <li class="">
-            <a href="<?=site_url()?>ujian">
+            <a href="<?=site_url('ujian')?>">
               <i class="menu-icon fa fa-pencil-square-o"></i>
               <span class="menu-text">
                Ujian
@@ -246,7 +246,7 @@ tr.even {
 
             <ul class="submenu">
               <li class="active">
-                <a href="<?=site_url()?>latihan/hasillatihan">
+                <a href="<?=site_url('latihan/hasillatihan')?>">
                   <i class="menu-icon fa fa-caret-right"></i>
                  Hasil Latihan
                 </a>
@@ -255,7 +255,7 @@ tr.even {
               </li>
 
               <li class="">
-                <a href="<?=site_url()?>ujian/hasil">
+                <a href="<?=site_url('ujian/hasil')?>">
                   <i class="menu-icon fa fa-caret-right"></i>
             Hasil Ujian
                 </a>
@@ -265,11 +265,11 @@ tr.even {
             </ul>
           </li>
 
-       
 
-          
 
-       
+
+
+
 
 
 

@@ -24,7 +24,7 @@
 		<link rel="stylesheet" href="<?=base_url()?>assets/css/ace-rtl.min.css" />
 <style>
             #response{display: none}
-  </style>  
+  </style>
 		<!--[if lte IE 9]>
 		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
 		<![endif]-->
@@ -58,11 +58,11 @@
 								<div id="login-box" class="login-box visible widget-box no-border">
 									<div class="widget-body">
 										<div class="widget-main">
-											
+
 
 											<div class="space-6"></div>
 
-											 <form id="loginform" class="form-vertical" action="<?php echo base_url() ?>login/logincek" method="POST"> 
+											 <form id="loginform" class="form-vertical" action="<?=site_url('Login/logincek');?>" method="POST">
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
@@ -81,7 +81,7 @@
 													<div class="space"></div>
 
 													<div class="clearfix">
-														
+
 														<button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
 															<i class="ace-icon fa fa-key"></i>
 															<span class="bigger-110">Login</span>
@@ -92,21 +92,21 @@
 												</fieldset>
 											</form>
 
-											
+
 
 											<div class="space-6"></div>
 
 										</div><!-- /.widget-main -->
 
 										<div class="toolbar clearfix">
-											
+
 
 											<div>
 												<a href="#" data-target="#signup-box" class="user-signup-link">
 													Registasi
 													<i class="ace-icon fa fa-arrow-right"></i>
 												</a>
-												 <span class="pull-left" id="response">Terdapat kesalahan dalam menginput Username dan Password</span>  	
+												 <span class="pull-left" id="response">Terdapat kesalahan dalam menginput Username dan Password</span>
 											</div>
 										</div>
 									</div><!-- /.widget-body -->
@@ -123,9 +123,9 @@
 
 
 											<div class="space-6"></div>
-											
 
-										 <form id="recoverform" action="<?=site_url()?>login/registrasi" class="form-vertical" method="POST" enctype="multipart/form-data">
+
+										 <form id="recoverform" action="<?=site_url('Login/registrasi')?>" class="form-vertical" method="POST" enctype="multipart/form-data">
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
@@ -161,11 +161,11 @@
 														</span>
 													</label>
 
-													
+
 													<div class="space-24"></div>
 
 													<div class="clearfix">
-														
+
 
 														<button type="submit" class="width-65 pull-right btn btn-sm btn-success">
 															<span class="bigger-110">Register</span>
@@ -187,7 +187,7 @@
 								</div><!-- /.signup-box -->
 							</div><!-- /.position-relative -->
 
-							
+
 						</div>
 					</div><!-- /.col -->
 				</div><!-- /.row -->
@@ -231,33 +231,33 @@
 				$(target).addClass('visible');//show target
 			 });
 			});
-			
-			
-			
+
+
+
 			//you don't need this, just used for changing background
 			jQuery(function($) {
 			 $('#btn-login-dark').on('click', function(e) {
 				$('body').attr('class', 'login-layout');
 				$('#id-text2').attr('class', 'white');
 				$('#id-company-text').attr('class', 'blue');
-				
+
 				e.preventDefault();
 			 });
 			 $('#btn-login-light').on('click', function(e) {
 				$('body').attr('class', 'login-layout light-login');
 				$('#id-text2').attr('class', 'grey');
 				$('#id-company-text').attr('class', 'blue');
-				
+
 				e.preventDefault();
 			 });
 			 $('#btn-login-blur').on('click', function(e) {
 				$('body').attr('class', 'login-layout blur-login');
 				$('#id-text2').attr('class', 'white');
 				$('#id-company-text').attr('class', 'light-blue');
-				
+
 				e.preventDefault();
 			 });
-			 
+
 			});
 		</script>
 		<script>
@@ -267,7 +267,7 @@
                 var url = $(this).attr('action');
                 var method = $(this).attr('method');
                 var data = $(this).serialize();
-                
+
                 $.ajax({
                    url:url,
                    type:method,
@@ -283,10 +283,10 @@
                     {
                     window.location.href='<?php echo site_url() ?>dashboard/';
                     throw new Error('go');
-                    } 
+                    }
                 });
             });
-            
+
             $( "div" ).each(function( index ) {
             var cl = $(this).attr('class');
             if(cl =='')
@@ -294,9 +294,9 @@
                     $(this).hide();
                 }
             });
-            
+
         });
-        </script>    
+        </script>
 </html>
 
 	</body>

@@ -96,7 +96,7 @@
 
 
               <li>
-                <a href="<?=site_url()?>login/logout">
+                <a href="<?=site_url('login/logout')?>">
                   <i class="ace-icon fa fa-power-off"></i>
                   Logout
                 </a>
@@ -159,77 +159,49 @@
         </li>
 
         <li class="">
-          <a href="<?=site_url()?>murid/materi">
-            <i class="menu-icon fa fa-desktop"></i>
-            <span class="menu-text">
-              Modul Materi
-            </span>
-
-
-          </a>
-        </li>
-        <li class="">
-          <a href="<?=site_url()?>murid/mapel">
+          <a href="<?=site_url('murid/mapel')?>" class="dropdown-toggle">
             <i class="menu-icon fa fa-book"></i>
             <span class="menu-text">
               Mata Pelajaran
             </span>
+            <b class="arrow fa fa-angle-down"></b>
 
 
           </a>
+          <ul class="submenu">
+            <li class="">
+              <a href="<?=site_url('murid/materi')?>">
+                <i class="menu-icon fa fa-desktop"></i>
+                <span class="menu-text">
+                  Modul Materi
+                </span>
+
+
+              </a>
+
+              <b class="arrow"></b>
+            </li>
+
+            <li class="">
+              <a href="<?=site_url('murid/latihan')?>">
+                <i class="menu-icon fa fa-pencil"></i>
+                <span class="menu-text">
+                  Latihan
+                </span>
+              </a>
+
+              <b class="arrow"></b>
+            </li>
+            <li class="">
+            <a href="<?=site_url('ujianmurid/ujian')?>">
+              <i class="menu-icon fa fa-pencil-square-o"></i>
+              <span class="menu-text">
+                Ujian
+              </span>
+            </a>
+          </li>
+          </ul>
         </li>
-        <li class="">
-          <a href="<?=site_url()?>murid/kompetensi_dasar">
-            <i class="menu-icon fa fa-bookmark"></i>
-            <span class="menu-text">
-              Kompetensi Dasar
-            </span>
-
-
-          </a>
-        </li>
-        <li class="">
-          <a href="<?=site_url()?>murid/indikator">
-            <i class="menu-icon fa fa-list-ul"></i>
-            <span class="menu-text">
-              Indikator
-            </span>
-
-
-          </a>
-        </li>
-        <li class="">
-          <a href="<?=site_url()?>murid/bank_soal">
-            <i class="menu-icon fa fa-archive"></i>
-            <span class="menu-text">
-              Bank Soal
-            </span>
-
-
-          </a>
-        </li>
-        <li>
-          <a href="<?=site_url()?>murid/latihan">
-            <i class="menu-icon fa fa-pencil"></i>
-            <span class="menu-text">
-              Latihan
-            </span>
-          </a>
-          <b class="arrow"></b>
-        </li>
-        <li>
-          <a href="<?=site_url()?>ujianmurid/ujian">
-            <i class="menu-icon fa fa-pencil-square-o"></i>
-            <span class="menu-text">
-              Ujian
-            </span>
-          </a>
-          <b class="arrow"></b>
-        </li>
-
-
-
-
         <li class="">
           <a href="#" class="dropdown-toggle">
             <i class="menu-icon fa fa-list"></i>
@@ -242,7 +214,7 @@
 
           <ul class="submenu">
             <li class="active">
-              <a href="<?=site_url()?>murid/hasil">
+              <a href="<?=site_url('murid/hasil')?>">
                 <i class="menu-icon fa fa-caret-right"></i>
                 Hasil Latihan
               </a>
@@ -251,7 +223,7 @@
             </li>
 
             <li class="">
-              <a href="<?=site_url()?>ujianmurid/hasil">
+              <a href="<?=site_url('ujianmurid/hasil')?>">
                 <i class="menu-icon fa fa-caret-right"></i>
                 Hasil Ujian
               </a>

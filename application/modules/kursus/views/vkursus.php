@@ -6,34 +6,34 @@
                 <div class="row">
                   <div class="col-xs-12">
                     <div>
-                      <a href="<?=site_url()?>kursus/addmateri" class="btn btn-primary"><i class="icon icon-plus"></i> Tambah Materi</a>
-             <?=$this->session->flashdata('pesan')?> 
+                      <a href="<?=site_url('kursus/addmateri')?>" class="btn btn-primary"><i class="icon icon-plus"></i> Tambah Materi</a>
+             <?=$this->session->flashdata('pesan')?>
                      <table id="dynamic-table" class="table table-bordered data-table">
             <thead>
                         <tr>
-                           
+
                             <th>Judul Materi</th>
-                           
+
                             <th></th>
-                           
+
                         </tr>
                     </thead>
-                   
+
                     <tbody>
-                     <?php $i=1; 
+                     <?php $i=1;
                      foreach ($kursus as $kurs) {
                      ?>
-                   
+
                         <tr class="<?=($i&1)?'even':'odd';?>">
                             <td>
                               <p class="lead"><?=$kurs->kursus_title?></p>
                               <span class="text-muted">Categori :</span> <?=$kurs->nama_categori?></span>
                               &nbsp;
-                             
-                             
-                             
+
+
+
                             </td>
-                           
+
                             <td>
 <a class="btn btn-warning" href = " <?= base_url('assets/upload/materi/' . $kurs->document)?>"><span class="glyphicon glyphicon-edit" title="Edit">Download</span></a>
 <a class="btn btn-warning" href = " <?= base_url('kursus/edit_kursus_detail/' . $kurs->kursus_id)?>"><span class="glyphicon glyphicon-edit" title="Edit">Edit</span></a>
@@ -41,7 +41,7 @@
 
                                     </td>
                         </tr>
-                       <?php 
+                       <?php
                        $i++;
                      }
                        ?>
@@ -50,7 +50,7 @@
 
                     </div>
                   </div>
-                  
+
                 </div>
               </div><!-- /.col -->
             </div><!-- /.row -->
@@ -97,7 +97,7 @@
             });
           }
         }
-        
+
      </script>
 </div>
   <div class="modal fade bs-example-modal-lg " id="modal_form" role="dialog">
@@ -113,7 +113,7 @@
       <div class="modal-body form">
          <?php echo form_open_multipart(site_url('kursus/save'),'role="form" id="form" class="form-horizontal"');?>
         <input type="hidden" value="" name="kursus_id" id="kursus_id" />
-        <?php 
+        <?php
           $option=array();
           $option['']='Pilih Category';
           foreach ($categories as $categoriii)
@@ -130,20 +130,20 @@
             </div>
           </div>
 
-         
+
 
            <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-1" >Judul Modul </label>
             <div class="col-sm-9">
-             <?php 
+             <?php
                 $data=array(
                     'name'        =>'kursus_title',
                     'placeholder' =>'Kursus Title',
                     'id'        =>'kursus_title',
                     'value'       =>'',
                     'rows'        =>'2',
-                   
-                   
+
+
                   );
                ?>
                <?php echo form_textarea($data); ?>
@@ -153,15 +153,15 @@
            <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-1" >Intro Modul </label>
             <div class="col-sm-9">
-              <?php 
+              <?php
                 $data=array(
                     'name'        =>'kursus_intro',
                     'placeholder' =>'Kursus Title',
                     'id'        =>'kursus_intro',
                     'value'       =>'',
                     'rows'        =>'2',
-                    
-                   
+
+
                   );
                ?>
                <?php echo form_textarea($data); ?>
@@ -171,15 +171,15 @@
               <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-1" >Deskripsi Modul </label>
             <div class="col-sm-9">
-              <?php 
+              <?php
                 $data=array(
                     'name'        =>'kursus_description',
                     'placeholder' =>'Kursus Title',
                     'id'        =>'kursus_description',
                     'value'       =>'',
                     'rows'        =>'2',
-                   
-                   
+
+
                   );
                ?>
                <?php echo form_textarea($data); ?>
@@ -190,14 +190,14 @@
               <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-1" >Requirement Modul </label>
             <div class="col-sm-9">
-              <?php 
+              <?php
                 $data=array(
                     'name'        =>'kursus_requirement',
                     'placeholder' =>'Kursus Title',
                     'id'        =>'kursus_requirement',
                     'value'       =>'',
                     'rows'        =>'2',
-                  
+
                   );
                ?>
                <?php echo form_textarea($data); ?>
@@ -207,14 +207,14 @@
            <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-1">target Modul </label>
             <div class="col-sm-9">
-             <?php 
+             <?php
                 $data=array(
                     'name'        =>'target_audience',
                     'placeholder' =>'Kursus Title',
                     'id'        =>'target_audience',
                     'value'       =>'',
                     'rows'        =>'2',
-                   
+
                   );
                ?>
                <?php echo form_textarea($data); ?>
@@ -224,15 +224,15 @@
           <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Yang Didapat Dari Modul </label>
             <div class="col-sm-9">
-            <?php 
+            <?php
                 $data=array(
                     'name'        =>'what_i_get',
                     'placeholder' =>'Kursus Title',
                     'id'        =>'what_i_get',
                     'value'       =>'',
                     'rows'        =>'2',
-             
-                    
+
+
                   );
                ?>
                <?php echo form_textarea($data); ?>
@@ -244,20 +244,20 @@
            <?=form_upload('feature_image','','id="feature_image" ')?>
             </div>
           </div>
-          
-          
+
+
           <div class="modal-footer">
            <button type="submit" id="btnSave"  class="btn btn-success"><span class="glyphicon glyphicon-saved"></span>Save</button>
             <button type="button" class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-arrow-left"></span>Cancel</button>
           </div>
-        
-         
+
+
        <?= form_close();?>
           </div>
-          
+
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
-    </div>  
+    </div>
     <!-- sms -->
 
 <script>
@@ -278,6 +278,3 @@ $('select#parent-category').change(function() {
     return confirm ('yakin mengahpus Materi Modul ini ?');
   }
 </script>
-
-
- 

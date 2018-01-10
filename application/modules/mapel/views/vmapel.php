@@ -6,53 +6,53 @@
                 <div class="row">
                   <div class="col-xs-12">
                     <div>
-                      <a href="<?=site_url()?>mapel/addmapel" class="btn btn-primary"><i class="icon icon-plus"></i> Tambah Mata Pelajaran</a>
+                      <a href="<?=site_url('mapel/addmapel')?>" class="btn btn-primary"><i class="icon icon-plus"></i> Tambah Mata Pelajaran</a>
                       <br>&nbsp;
                       <?php if($this->session->flashdata('pesan')){ ?>
                       <div class="alert alert-success">
-                      <?=$this->session->flashdata('pesan')?> 
+                      <?=$this->session->flashdata('pesan')?>
                       </div> <?php } ?>
-                  <form action="" method="get" accept-charset="utf-8" class="form-horizontal validatable" target="_top">             
-                  <div class="padded"> 
-                  
+                  <form action="" method="get" accept-charset="utf-8" class="form-horizontal validatable" target="_top">
+                  <div class="padded">
+
                     <div class="control-group">
                       <label class="control-label col-md-2">Kategori</label>
                       <div class="controls">
                         <select name="category" data-placeholder="Pilih Kategori..." class="chosen-select">
-                        <option value=""></option> 
-                        <?php  
+                        <option value=""></option>
+                        <?php
                          foreach ($categories as $category) {
                          ?>
-                         <option value="<?=$category->categori_id?>"><?=$category->nama_categori?></option> 
+                         <option value="<?=$category->categori_id?>"><?=$category->nama_categori?></option>
                          <?php } ?>
                         </select>
                       </div>
                     </div>
-                  </div>            
+                  </div>
 
                   <div class="form-actions">
                     <input type="hidden" name="operation" value="selection" />
                     <input type="submit" value="Tampilkan" class="btn btn-normal btn-gray" />
                   </div>
-                </form> 
+                </form>
 
                      <table id="dynamic-table" class="table table-bordered data-table">
             <thead>
                         <tr>
-                           
+
                             <th>Kategori</th>
                             <th>Nama Mata Pelajaran</th>
                             <th>Status</th>
                             <th></th>
-                           
+
                         </tr>
                     </thead>
-                   
+
                     <tbody>
-                     <?php $i=1; 
+                     <?php $i=1;
                      foreach ($mapel as $map) {
                      ?>
-                   
+
                         <tr class="<?=($i&1)?'even':'odd';?>">
                             <td><?=$map->nama_categori?></td>
                             <td><?=$map->nama_mapel?></td>
@@ -65,7 +65,7 @@
 
                                     </td>
                         </tr>
-                       <?php 
+                       <?php
                        $i++;
                      }
                        ?>
@@ -74,7 +74,7 @@
 
                     </div>
                   </div>
-                  
+
                 </div>
               </div><!-- /.col -->
             </div><!-- /.row -->
@@ -122,7 +122,7 @@
             });
           }
         }
-        
+
      </script>
 </div>
   <div class="modal fade bs-example-modal-lg " id="modal_form" role="dialog">
@@ -138,7 +138,7 @@
       <div class="modal-body form">
          <?php echo form_open_multipart(site_url('kursus/save'),'role="form" id="form" class="form-horizontal"');?>
         <input type="hidden" value="" name="kursus_id" id="kursus_id" />
-        <?php 
+        <?php
           $option=array();
           $option['']='Pilih Category';
           foreach ($categories as $categoriii)
@@ -155,20 +155,20 @@
             </div>
           </div>
 
-         
+
 
            <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-1" >Judul Modul </label>
             <div class="col-sm-9">
-             <?php 
+             <?php
                 $data=array(
                     'name'        =>'kursus_title',
                     'placeholder' =>'Kursus Title',
                     'id'        =>'kursus_title',
                     'value'       =>'',
                     'rows'        =>'2',
-                   
-                   
+
+
                   );
                ?>
                <?php echo form_textarea($data); ?>
@@ -178,15 +178,15 @@
            <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-1" >Intro Modul </label>
             <div class="col-sm-9">
-              <?php 
+              <?php
                 $data=array(
                     'name'        =>'kursus_intro',
                     'placeholder' =>'Kursus Title',
                     'id'        =>'kursus_intro',
                     'value'       =>'',
                     'rows'        =>'2',
-                    
-                   
+
+
                   );
                ?>
                <?php echo form_textarea($data); ?>
@@ -196,15 +196,15 @@
               <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-1" >Deskripsi Modul </label>
             <div class="col-sm-9">
-              <?php 
+              <?php
                 $data=array(
                     'name'        =>'kursus_description',
                     'placeholder' =>'Kursus Title',
                     'id'        =>'kursus_description',
                     'value'       =>'',
                     'rows'        =>'2',
-                   
-                   
+
+
                   );
                ?>
                <?php echo form_textarea($data); ?>
@@ -215,14 +215,14 @@
               <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-1" >Requirement Modul </label>
             <div class="col-sm-9">
-              <?php 
+              <?php
                 $data=array(
                     'name'        =>'kursus_requirement',
                     'placeholder' =>'Kursus Title',
                     'id'        =>'kursus_requirement',
                     'value'       =>'',
                     'rows'        =>'2',
-                  
+
                   );
                ?>
                <?php echo form_textarea($data); ?>
@@ -232,14 +232,14 @@
            <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-1">target Modul </label>
             <div class="col-sm-9">
-             <?php 
+             <?php
                 $data=array(
                     'name'        =>'target_audience',
                     'placeholder' =>'Kursus Title',
                     'id'        =>'target_audience',
                     'value'       =>'',
                     'rows'        =>'2',
-                   
+
                   );
                ?>
                <?php echo form_textarea($data); ?>
@@ -249,15 +249,15 @@
           <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Yang Didapat Dari Modul </label>
             <div class="col-sm-9">
-            <?php 
+            <?php
                 $data=array(
                     'name'        =>'what_i_get',
                     'placeholder' =>'Kursus Title',
                     'id'        =>'what_i_get',
                     'value'       =>'',
                     'rows'        =>'2',
-             
-                    
+
+
                   );
                ?>
                <?php echo form_textarea($data); ?>
@@ -269,20 +269,20 @@
            <?=form_upload('feature_image','','id="feature_image" ')?>
             </div>
           </div>
-          
-          
+
+
           <div class="modal-footer">
            <button type="submit" id="btnSave"  class="btn btn-success"><span class="glyphicon glyphicon-saved"></span>Save</button>
             <button type="button" class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-arrow-left"></span>Cancel</button>
           </div>
-        
-         
+
+
        <?= form_close();?>
           </div>
-          
+
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
-    </div>  
+    </div>
     <!-- sms -->
 
 <script>
@@ -303,6 +303,3 @@ $('select#parent-category').change(function() {
     return confirm ('yakin mengahpus Materi Modul ini ?');
   }
 </script>
-
-
- 
