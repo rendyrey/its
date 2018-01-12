@@ -19,14 +19,14 @@ class Bank_soal extends CI_Controller
 		//$this->data['categoris']=$this->Kursus_m->getsubcategori();
 		if ($this->session->userdata('level')=='superadmin')
 		{
-		if(isset($_GET['category']) && $_GET['category']!='' && isset($_GET['mapel']) && $_GET['mapel']!='' && isset($_GET['kompetensi']) && $_GET['kompetensi']!=''){
-			$this->data['soal']=$this->Soal_m->getallcat($_GET['category'],$_GET['mapel'],$_GET['kompetensi']);
+		if(isset($_GET['mapel']) && $_GET['mapel']!='' && isset($_GET['kompetensi']) && $_GET['kompetensi']!=''){
+			$this->data['soal']=$this->Soal_m->getallcat($_GET['mapel'],$_GET['kompetensi']);
 		} else {
 			$this->data['soal']=array();
 		}
 		$this->data['message']=$message;
 		$this->data['cat_id']=$cat_id;
-		$this->data['categories']=$this->Categori_m->get_categories();
+		// $this->data['categories']=$this->Categori_m->get_categories();
 		$this->data['halaman']="bank_soal/vsoal";
 		$mapel = $this->Mapel_m->tampil();
 		foreach($mapel as $row){
@@ -127,7 +127,6 @@ class Bank_soal extends CI_Controller
 	public function edit_soal_detail($id,$pesan='')
 	{
 		if(!is_numeric($id)){show_404();}
-		$this->data['categories']=$this->Categori_m->get_categories();
 		$this->data['pesan']=$pesan;
 		$this->data['soal']=$this->Soal_m->get_soal_detail($id);
 		$this->data['halaman']="bank_soal/editsoal";

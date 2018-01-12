@@ -96,7 +96,7 @@
                             <td><?php echo ($sol->active==='1')?"<span class='btn btn-xs btn-success'>Aktif</span>":"<span class='btn btn-xs btn-danger'>Tidak Aktif</span>"; ?></td>
 
                             <td>
-<a class="btn btn-warning" href = " <?= base_url('bank_soal/edit_soal_detail/' . $sol->soal_id)?>"><span class="glyphicon glyphicon-edit" title="Edit">Edit</span></a>
+<a class="btn btn-warning" href = " <?= site_url('bank_soal/edit_soal_detail/'.$sol->soal_id)?>"><span class="glyphicon glyphicon-edit" title="Edit">Edit</span></a>
 <a onclick="return delete_confirmation()" class="btn btn-warning" href = " <?= site_url('bank_soal/hapus_soal/' . $sol->soal_id)?>"><span class="glyphicon glyphicon-edit" title="Edit">Delete</span></a>
 
                                     </td>
