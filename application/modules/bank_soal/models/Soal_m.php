@@ -74,14 +74,12 @@ class Soal_m extends CI_Model {
                 ->result();
         return $result;
     }
-    public function getallcat($cat,$map,$kom)
+    public function getallcat($map,$kom)
     {
-        $result =$this->db->select('soal.*, kompetensi.nama_kompetensi, mapel.nama_mapel, categori.nama_categori')
-                ->where('soal.categori_id',$cat)
+        $result =$this->db->select('soal.*, kompetensi.nama_kompetensi, mapel.nama_mapel')
                 ->where('soal.mapel_id',$map)
                 ->where('soal.kompetensi_id',$kom)
                 ->from('soal')
-                ->join('categori','categori.categori_id = soal.categori_id','left')
                 ->join('mapel','mapel.mapel_id = soal.mapel_id','left')
                 ->join('kompetensi','kompetensi.kompetensi_id = soal.kompetensi_id','left')
                 ->get()
@@ -96,7 +94,7 @@ class Soal_m extends CI_Model {
     }
     public function get_subcategori_by_map_id($id)
     {
-        
+
         $this->db->select('*');
         $this->db->where('mapel_id', $id);
         $this->db->from('kompetensi');
@@ -140,10 +138,9 @@ class Soal_m extends CI_Model {
     }
     public function get_soal_detail($id)
     {
-        $result =   $this->db->select('soal.*, kompetensi.nama_kompetensi, categori.nama_categori, mapel.nama_mapel')
+        $result =   $this->db->select('soal.*, kompetensi.nama_kompetensi,mapel.nama_mapel')
                     ->where('soal_id',$id)
                     ->from('soal')
-                    ->join('categori','categori.categori_id=soal.categori_id','left')
                     ->join('mapel','mapel.mapel_id=soal.mapel_id','left')
                     ->join('kompetensi','kompetensi.kompetensi_id=soal.kompetensi_id','left')
                     ->get()
