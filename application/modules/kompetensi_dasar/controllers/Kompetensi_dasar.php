@@ -47,7 +47,6 @@ class Kompetensi_dasar extends CI_Controller
 				$this->data['mapel'][] = $row->nama_mapel;
 				$this->data['mapel_id'][] = $row->mapel_id;
 			}
-			$this->data['categories']=$this->Categori_m->get_categories();
 			$this->data['halaman']='addkompetensi';
 			$this->load->view('_main',$this->data);
 		}else
@@ -150,12 +149,10 @@ class Kompetensi_dasar extends CI_Controller
 	public function update_kompetensi()
 	{
 			$kompetensi_id=$this->input->post('kompetensi_id');
-			$category= $this->input->post('category');
 			$mapel= $this->input->post('mapel');
 			$kompetensi= $this->input->post('kompetensi');
 			$status=$this->input->post('status');
 
-			$this->form_validation->set_rules('category','Category','required');
 			$this->form_validation->set_rules('mapel','Mapel','required');
 			$this->form_validation->set_rules('kompetensi','Kompetensi','required');
 			$this->form_validation->set_rules('status','Status','required');
@@ -168,7 +165,6 @@ class Kompetensi_dasar extends CI_Controller
 
                 $data = array(
                     'nama_kompetensi' => $kompetensi,
-                    'categori_id' => $category,
                     'mapel_id' => $mapel,
                     'active' => $status
                 );

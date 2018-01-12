@@ -43,7 +43,7 @@
                               <?php echo ($map->active==='1')?"<span class='btn btn-xs btn-success'>Aktif</span>":"<span class='btn btn-xs btn-danger'>Tidak Aktif</span>"; ?>
                             </td>
                             <td>
-<a class="btn btn-warning" href = " <?= base_url('mapel/edit_mapel_detail/' . $map->mapel_id)?>"><span class="glyphicon glyphicon-edit" title="Edit">Edit</span></a>
+<a class="btn btn-warning" href = " <?= site_url('mapel/edit_mapel_detail/'.$map->mapel_id)?>"><span class="glyphicon glyphicon-edit" title="Edit">Edit</span></a>
 <a onclick="return delete_confirmation()" class="btn btn-warning" href = " <?= site_url('mapel/hapus_mapel/' . $map->mapel_id)?>"><span class="glyphicon glyphicon-edit" title="Edit">Delete</span></a>
 
                                     </td>

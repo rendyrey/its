@@ -94,11 +94,9 @@ class Mapel extends CI_Controller
 	public function update_mapel()
 	{
 			$mapel_id=$this->input->post('mapel_id');
-			$category= $this->input->post('category');
 			$mapel_title= $this->input->post('mapel_title');
 			$status= $this->input->post('status');
 
-			$this->form_validation->set_rules('category','Category','required');
 			$this->form_validation->set_rules('mapel_title','Mapel Titla','required');
 			$this->form_validation->set_rules('status','Status','required');
 
@@ -110,7 +108,6 @@ class Mapel extends CI_Controller
 
                $data = array(
                 'nama_mapel' => $mapel_title,
-                'categori_id' => $category,
                 'active' => $status
                 );
 

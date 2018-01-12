@@ -52,18 +52,18 @@
 
                     <tbody>
                      <?php $i=1;
-                     foreach ($kompetensi as $komp) {
+                     foreach ($indikator as $indi) {
                      ?>
 
                         <tr class="<?=($i&1)?'even':'odd';?>">
-                            <td><?=$komp->nama_mapel?></td>
-                            <td><?=$komp->nama_kompetensi?></td>
-                            <td>Indikator</td>
-                            <td><?php echo ($komp->active==='1')?"<span class='btn btn-xs btn-success'>Aktif</span>":"<span class='btn btn-xs btn-danger'>Tidak Aktif</span>"; ?></td>
+                            <td><?=$indi->nama_mapel?></td>
+                            <td><?=$indi->nama_kompetensi?></td>
+                            <td><?=$indi->nama_indikator;?></td>
+                            <td><?php echo ($indi->active==='1')?"<span class='btn btn-xs btn-success'>Aktif</span>":"<span class='btn btn-xs btn-danger'>Tidak Aktif</span>"; ?></td>
 
                             <td>
-<a class="btn btn-warning" href = " <?= site_url('indikator/edit_indikator/' . $komp->kompetensi_id)?>"><span class="glyphicon glyphicon-edit" title="Edit">Edit</span></a>
-<a onclick="return delete_confirmation()" class="btn btn-warning" href = " <?= site_url('kompetensi_dasar/hapus_kompetensi/' . $komp->kompetensi_id)?>"><span class="glyphicon glyphicon-edit" title="Edit">Delete</span></a>
+<a class="btn btn-warning" href = " <?= site_url('indikator/edit_indikator/' . $indi->kompetensi_id)?>"><span class="glyphicon glyphicon-edit" title="Edit">Edit</span></a>
+<a onclick="return delete_confirmation()" class="btn btn-warning" href = " <?= site_url('kompetensi_dasar/hapus_kompetensi/' . $indi->kompetensi_id)?>"><span class="glyphicon glyphicon-edit" title="Edit">Delete</span></a>
 
                                     </td>
                         </tr>

@@ -109,10 +109,9 @@ class Kompetensi_m extends CI_Model {
     }
     public function get_kompetensi_detail($id)
     {
-        $result =   $this->db->select('kompetensi.*, categori.nama_categori, mapel.nama_mapel')
+        $result =   $this->db->select('kompetensi.*, mapel.nama_mapel')
                     ->where('kompetensi_id',$id)
                     ->from('kompetensi')
-                    ->join('categori','categori.categori_id=kompetensi.categori_id','left')
                     ->join('mapel','mapel.mapel_id=kompetensi.mapel_id','left')
                     ->get()
                     ->row();

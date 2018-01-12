@@ -35,10 +35,9 @@ class Mapel_m extends CI_Model {
     }
     public function get_mapel_detail($id)
     {
-        $result =   $this->db->select('mapel.*, categori.nama_categori')
+        $result =   $this->db->select('mapel.*')
                     ->where('mapel_id',$id)
                     ->from('mapel')
-                    ->join('categori','categori.categori_id=mapel.categori_id','left')
                     ->get()
                     ->row();
         return $result;

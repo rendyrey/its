@@ -21,7 +21,7 @@
                         <select name="mapel" class="chosen-select" style="width:300px;" required>
                           <?php
                           $i=0;
-                          // echo "<option>hi</option>";
+
                           foreach($mapel as $row){
                             echo "<option value='$mapel_id[$i]'>$mapel[$i]</option>";
                             $i++;

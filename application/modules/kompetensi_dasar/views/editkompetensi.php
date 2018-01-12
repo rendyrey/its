@@ -3,40 +3,30 @@
           <div class="page-content">
             <div class="row">
               <div class="col-xs-12">
-                
+
                     <div>
-                     
-                     
- <?=$this->session->flashdata('pesan')?> 
+
+
+ <?=$this->session->flashdata('pesan')?>
   <?=form_open_multipart(site_url('kompetensi_dasar/update_kompetensi'), 'role="form" class="form=horizontal"');?>
-            
+
             <input type="hidden" name="kompetensi_id" id="kompetensi_id" value="<?=$kompetensi->kompetensi_id?>">
-              
-          <div class="form-group">
-            <label class="control-label col-md-3" >Pilih Categori </label>
-            <div class="col-sm-9">
-             <select name="category" data-placeholder="Pilih Kategori..." class="chosen-select" style="width:300px;" onChange="getState(this.value)" required>
-              <option value=""></option> 
-              <?php  foreach ($categories as $category) { ?>
-               <option value="<?=$category->categori_id?>" <?php echo ($kompetensi->categori_id==$category->categori_id)? "selected" : ""; ?>><?=$category->nama_categori?></option> 
-               <?php } ?>
-              </select>
-            </div>
-          </div>
+
+
 
           <div class="form-group">
             <label class="control-label col-md-3" >Pilih Mata Pelajaran </label>
             <div class="col-sm-9" id="subcategorydiv">
               <select name="mapel" class="chosen-select" style="width:300px;" required>
-                  <option value="<?=$kompetensi->mapel_id?>"><?=$kompetensi->nama_mapel?></option> 
+                  <option value="<?=$kompetensi->mapel_id?>"><?=$kompetensi->nama_mapel?></option>
                 </select>
             </div>
           </div>
-          
+
             <div class="form-group">
             <label class="control-label col-md-3" >Kompetensi Dasar </label>
             <div class="col-sm-9">
-             <?php 
+             <?php
                 $data=array(
                     'name'        =>'kompetensi',
                     'placeholder' =>'',
@@ -44,14 +34,14 @@
                     'value'       =>$kompetensi->nama_kompetensi,
                     'rows'        =>'1',
                     'class'       => 'form-control',
-                   
-                   
+
+
                   );
                ?>
                <?php echo form_textarea($data); ?>
             </div>
           </div>
-          
+
           <div class="form-group">
             <label class="control-label col-md-3" >Status </label>
             <div class="col-sm-9">
@@ -65,7 +55,7 @@
 
           <div class="modal-footer">
            <button type="submit" id="btnSave"  class="btn btn-success"><span class="glyphicon glyphicon-saved"></span>Save</button>
-           
+
           </div>
             <?=form_close();?>
                 </div>
@@ -76,13 +66,13 @@
 </div>
 <script language="javascript" type="text/javascript">
 
-function getXMLHTTP() { 
-    var xmlhttp=false;  
+function getXMLHTTP() {
+    var xmlhttp=false;
     try{
       xmlhttp=new XMLHttpRequest();
     }
-    catch(e)  {   
-      try{      
+    catch(e)  {
+      try{
         xmlhttp= new ActiveXObject("Microsoft.XMLHTTP");
       }
       catch(e){
@@ -94,32 +84,32 @@ function getXMLHTTP() {
         }
       }
     }
-      
+
     return xmlhttp;
     }
-  
-  function getState(category_id) {    
-    
+
+  function getState(category_id) {
+
     var strURL="<?=base_url()?>kompetensi_dasar/getsubcategoriajax/"+category_id;
     var req = getXMLHTTP();
-    
+
     if (req) {
-      
+
       req.onreadystatechange = function() {
         if (req.readyState == 4) {
           // only if "OK"
-          if (req.status == 200) {            
-            document.getElementById('subcategorydiv').innerHTML=req.responseText;           
+          if (req.status == 200) {
+            document.getElementById('subcategorydiv').innerHTML=req.responseText;
           } else {
             alert("There was a problem while using XMLHTTP:\n" + req.statusText);
           }
-        }       
-      }     
-      
+        }
+      }
+
       req.open("GET", strURL, true);
       req.send(null);
-    }   
+    }
   }
-  
-  
+
+
 </script>
