@@ -1,10 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Kompetensi_m extends CI_Model { 
-    
+class Kompetensi_m extends CI_Model {
+
     var $table='kompetensi';
 	public function insert($data)
-    { 
+    {
         $this->db->insert($this->table,$data);
         return $this->db->insert_id();
     }
@@ -34,7 +34,7 @@ class Kompetensi_m extends CI_Model {
     }
     public function actionupdate($id,$data)
     {
-        
+
         $this->db->where('kompetensi_id', $id);
         $this->db->update($this->table, $data);
     }
@@ -47,9 +47,8 @@ class Kompetensi_m extends CI_Model {
     }
     public function getall()
     {
-        $result =$this->db->select('kompetensi.*, mapel.nama_mapel, categori.nama_categori')
+        $result =$this->db->select('kompetensi.*, mapel.nama_mapel')
                 ->from('kompetensi')
-                ->join('categori','categori.categori_id = kompetensi.categori_id','left')
                 ->join('mapel','mapel.mapel_id = kompetensi.mapel_id','left')
                 ->get()
                 ->result();
@@ -75,7 +74,7 @@ class Kompetensi_m extends CI_Model {
     }
     public function get_subcategori_by_cat_id($id)
     {
-        
+
         $this->db->select('*');
         $this->db->where('categori_id', $id);
         $this->db->from('mapel');
@@ -153,7 +152,7 @@ class Kompetensi_m extends CI_Model {
         }
         return TRUE;
     }
-   
+
     public function update_kursus_title($id,$upload_data='')
     {
         $info=array();
@@ -176,7 +175,7 @@ class Kompetensi_m extends CI_Model {
         }
 
     }
-   
+
     public function get_materi_detail_m($id)
     {
         $hasil  = $this->db->select('*')
@@ -188,7 +187,7 @@ class Kompetensi_m extends CI_Model {
                 ->row();
         return $hasil;
     }
-   
+
     public function ambil_materi()
     {
         $result=$this->db->select('*')
@@ -204,7 +203,7 @@ class Kompetensi_m extends CI_Model {
     public function saranmateri()
     {
         $result=$this->db->select('*')
-                
+
                 ->from('hasillatihan')
                 ->join('tbl_latihan','tbl_latihan.title_id = hasillatihan.latihan_id','left')
                 ->join('categori','categori.categori_id = tbl_latihan.categori_id','left')

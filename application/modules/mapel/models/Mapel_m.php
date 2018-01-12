@@ -1,10 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Mapel_m extends CI_Model { 
-    
+class Mapel_m extends CI_Model {
+
     var $table='mapel';
 	public function insert($data)
-    { 
+    {
         $this->db->insert($this->table,$data);
         return $this->db->insert_id();
     }
@@ -29,7 +29,7 @@ class Mapel_m extends CI_Model {
     }
     public function actionupdate($id,$data)
     {
-        
+
         $this->db->where('mapel_id', $id);
         $this->db->update($this->table, $data);
     }
@@ -45,9 +45,8 @@ class Mapel_m extends CI_Model {
     }
     public function getall()
     {
-        $result =$this->db->select('mapel.*, categori.nama_categori')
+        $result =$this->db->select('mapel.*')
                 ->from('mapel')
-                ->join('categori','categori.categori_id = mapel.categori_id','left')
                 ->get()
                 ->result();
         return $result;
@@ -62,5 +61,5 @@ class Mapel_m extends CI_Model {
                 ->result();
         return $result;
     }
-    
+
 }

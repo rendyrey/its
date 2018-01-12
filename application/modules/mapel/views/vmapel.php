@@ -15,32 +15,16 @@
                   <form action="" method="get" accept-charset="utf-8" class="form-horizontal validatable" target="_top">
                   <div class="padded">
 
-                    <div class="control-group">
-                      <label class="control-label col-md-2">Kategori</label>
-                      <div class="controls">
-                        <select name="category" data-placeholder="Pilih Kategori..." class="chosen-select">
-                        <option value=""></option>
-                        <?php
-                         foreach ($categories as $category) {
-                         ?>
-                         <option value="<?=$category->categori_id?>"><?=$category->nama_categori?></option>
-                         <?php } ?>
-                        </select>
-                      </div>
-                    </div>
+
                   </div>
 
-                  <div class="form-actions">
-                    <input type="hidden" name="operation" value="selection" />
-                    <input type="submit" value="Tampilkan" class="btn btn-normal btn-gray" />
-                  </div>
+
                 </form>
 
                      <table id="dynamic-table" class="table table-bordered data-table">
             <thead>
                         <tr>
 
-                            <th>Kategori</th>
                             <th>Nama Mata Pelajaran</th>
                             <th>Status</th>
                             <th></th>
@@ -54,7 +38,6 @@
                      ?>
 
                         <tr class="<?=($i&1)?'even':'odd';?>">
-                            <td><?=$map->nama_categori?></td>
                             <td><?=$map->nama_mapel?></td>
                             <td>
                               <?php echo ($map->active==='1')?"<span class='btn btn-xs btn-success'>Aktif</span>":"<span class='btn btn-xs btn-danger'>Tidak Aktif</span>"; ?>

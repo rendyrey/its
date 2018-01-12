@@ -13,27 +13,20 @@
              <?=$this->session->flashdata('pesan')?>
                       </div> <?php } ?>
                 <form action="" method="get" accept-charset="utf-8" class="form-horizontal validatable" target="_top">
-                  <div class="padded">
-                    <div class="control-group">
-                      <label class="control-label col-md-2">Kategori</label>
-                      <div class="controls">
-                        <select name="category" data-placeholder="Pilih Kategori..." class="chosen-select" style="width:300px;" onChange="getState(this.value)" required>
-                        <option value=""></option>
-                        <?php
-                         foreach ($categories as $category) {
-                         ?>
-                         <option value="<?=$category->categori_id?>"><?=$category->nama_categori?></option>
-                         <?php } ?>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
+
                   <div class="padded">
                     <div class="control-group">
                       <label class="control-label col-md-2">Mata Pelajaran</label>
                       <div class="controls" id="subcategorydiv">
                         <select name="mapel" class="chosen-select" style="width:300px;" required>
-                          <option>Pilih Kategori Dulu</option>
+                          <?php
+                          $i=0;
+                          // echo "<option>hi</option>";
+                          foreach($mapel as $row){
+                            echo "<option value='$mapel_id[$i]'>$mapel[$i]</option>";
+                            $i++;
+                          }
+                           ?>
                         </select>
                       </div>
                     </div>
@@ -49,11 +42,10 @@
                         <tr>
 
                             <th>Mata Pelajaran</th>
-                            <th>Tingkat</th>
                             <th>Kompetensi Dasar</th>
                             <th>Indikator</th>
                             <th>Status</th>
-                            <th></th>
+                            <th>Aksi</th>
 
                         </tr>
                     </thead>
@@ -65,7 +57,6 @@
 
                         <tr class="<?=($i&1)?'even':'odd';?>">
                             <td><?=$komp->nama_mapel?></td>
-                            <td><?=$komp->nama_categori?></td>
                             <td><?=$komp->nama_kompetensi?></td>
                             <td>Indikator</td>
                             <td><?php echo ($komp->active==='1')?"<span class='btn btn-xs btn-success'>Aktif</span>":"<span class='btn btn-xs btn-danger'>Tidak Aktif</span>"; ?></td>

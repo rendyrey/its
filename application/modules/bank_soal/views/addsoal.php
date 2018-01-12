@@ -3,29 +3,27 @@
           <div class="page-content">
             <div class="row">
               <div class="col-xs-12">
-                
+
                     <div>
-                     
+
           <?=form_open_multipart(site_url('bank_soal/simpansoal'), 'id="upload-form" role="form" class="form=horizontal"');?>
-     
-          <div class="form-group">
-            <label class="control-label" >Pilih Categori </label>
-            <div class="controls">
-             <select name="category" data-placeholder="Pilih Kategori..." class="chosen-select" style="width:300px;" onChange="getState(this.value)" required>
-              <option value=""></option> 
-              <?php  foreach ($categories as $category) { ?>
-               <option value="<?=$category->categori_id?>"><?=$category->nama_categori?></option> 
-               <?php } ?>
-              </select>
-            </div>
-          </div>
+
+
 
           <div class="form-group">
             <label class="control-label" >Pilih Mata Pelajaran </label>
             <div class="controls" id="subcategorydiv">
-              <select name="mapel" class="chosen-select" style="width:300px;" required>
-                  <option>Pilih Kategori Dulu</option> 
-                </select>
+              <select name="mapel" class="chosen-select" style="width:300px;" onChange="getState2(this.value)" required>
+                <option value="" disabled>Pilih Mata Pelajaran</option>
+                <?php
+                $i=0;
+                // echo "<option>hi</option>";
+                foreach($mapel as $row){
+                  echo "<option value='$mapel_id[$i]'>$mapel[$i]</option>";
+                  $i++;
+                }
+                 ?>
+              </select>
             </div>
           </div>
 
@@ -33,7 +31,7 @@
             <label class="control-label" >Pilih Kompetensi Dasar </label>
             <div class="controls" id="subcategorydiv2">
               <select name="kompetensi" class="chosen-select" style="width:300px;" required>
-                  <option>Pilih Mata Pelajaran Dulu</option> 
+                  <option>Pilih Mata Pelajaran Dulu</option>
                 </select>
             </div>
           </div>
@@ -42,10 +40,10 @@
             <label class="control-label" >Tingkat Kesulitan </label>
             <div class="controls" >
               <select name="kesulitan" class="" style="width:300px;" required>
-                  <option value="0">Pilih Tingkat Kesulitan</option>                      
-                    <option value="1">Mudah</option>                      
-                    <option value="2">Sedang</option>                     
-                    <option value="3">Sulit</option> 
+                  <option value="0">Pilih Tingkat Kesulitan</option>
+                    <option value="1">Mudah</option>
+                    <option value="2">Sedang</option>
+                    <option value="3">Sulit</option>
                 </select>
             </div>
           </div>
@@ -53,7 +51,7 @@
           <div class="form-group">
             <label class="control-label ">Soal</label>
             <div class="controls">
-            <?php 
+            <?php
                     $data=array(
                         'name'        => 'soal',
                         'placeholder' => '',
@@ -73,11 +71,11 @@
              <select name="tipe" class=""  onchange="showDiv(this)" id="pr_bookingtype" required>
               <option value="">Pilih Tipe Jawaban</option>
               <option value="Single">Pilihan Ganda</option>
-              <option value="Multiple">Multi Pilihan</option>     
-            </select> 
+              <option value="Multiple">Multi Pilihan</option>
+            </select>
             </div>
           </div>
-          
+
           <div id="hidden_div_single" style="display: none;">
           <label class="control-label">Masukan Pilihan</label>
           <table width="100%">
@@ -191,7 +189,7 @@
             <tr>
           </table>
           </div>
-          
+
           <div class="form-group">
             <label class="control-label">Nilai Benar</label>
             <div class="controls">
@@ -200,14 +198,14 @@
           </div>
 
           <div class="form-group">
-           
+
             <div class="controls">
              <button type="submit" id="btnSave"  class="btn btn-success"><span class="glyphicon glyphicon-saved"></span>Save</button>
             </div>
           </div>
 
        <?=form_close()?>
-                  
+
                 </div>
               </div><!-- /.col -->
             </div><!-- /.row -->
@@ -239,13 +237,13 @@
 </script>
 <script language="javascript" type="text/javascript">
 
-function getXMLHTTP() { 
-    var xmlhttp=false;  
+function getXMLHTTP() {
+    var xmlhttp=false;
     try{
       xmlhttp=new XMLHttpRequest();
     }
-    catch(e)  {   
-      try{      
+    catch(e)  {
+      try{
         xmlhttp= new ActiveXObject("Microsoft.XMLHTTP");
       }
       catch(e){
@@ -257,53 +255,53 @@ function getXMLHTTP() {
         }
       }
     }
-      
+
     return xmlhttp;
     }
-  
-  function getState(category_id) {    
-    
+
+  function getState(category_id) {
+
     var strURL="<?=base_url()?>bank_soal/getsubcategoriajax/"+category_id;
     var req = getXMLHTTP();
-    
+
     if (req) {
-      
+
       req.onreadystatechange = function() {
         if (req.readyState == 4) {
           // only if "OK"
-          if (req.status == 200) {            
-            document.getElementById('subcategorydiv').innerHTML=req.responseText;           
+          if (req.status == 200) {
+            document.getElementById('subcategorydiv').innerHTML=req.responseText;
           } else {
             alert("There was a problem while using XMLHTTP:\n" + req.statusText);
           }
-        }       
-      }     
-      
+        }
+      }
+
       req.open("GET", strURL, true);
       req.send(null);
-    }   
+    }
   }
-  
-  function getState2(mapel_id) {    
-    
-    var strURL="<?=base_url()?>bank_soal/getsubcategoriajax2/"+mapel_id;
+
+  function getState2(mapel_id) {
+
+    var strURL="<?=site_url('bank_soal/getsubcategoriajax2/')?>"+mapel_id;
     var req = getXMLHTTP();
-    
+
     if (req) {
-      
+
       req.onreadystatechange = function() {
         if (req.readyState == 4) {
           // only if "OK"
-          if (req.status == 200) {            
-            document.getElementById('subcategorydiv2').innerHTML=req.responseText;           
+          if (req.status == 200) {
+            document.getElementById('subcategorydiv2').innerHTML=req.responseText;
           } else {
             alert("There was a problem while using XMLHTTP:\n" + req.statusText);
           }
-        }       
-      }     
-      
+        }
+      }
+
       req.open("GET", strURL, true);
       req.send(null);
-    }   
+    }
   }
 </script>

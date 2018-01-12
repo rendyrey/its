@@ -1,22 +1,23 @@
 <?php if(!defined('BASEPATH')) exit('No direct access allowed');
 /**
-* 
+*
 */
 class Bank_soal extends CI_Controller
 {
-	
+
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model('categori/Categori_m');
 		$this->load->model('Soal_m');
+		$this->load->model('mapel/Mapel_m');
 	}
 	public function index($message='',$cat_id='')
 	{
 		$data=array();
 		$userid=$this->session->userdata('user_id');
 		//$this->data['categoris']=$this->Kursus_m->getsubcategori();
-		if ($this->session->userdata('level')=='superadmin') 
+		if ($this->session->userdata('level')=='superadmin')
 		{
 		if(isset($_GET['category']) && $_GET['category']!='' && isset($_GET['mapel']) && $_GET['mapel']!='' && isset($_GET['kompetensi']) && $_GET['kompetensi']!=''){
 			$this->data['soal']=$this->Soal_m->getallcat($_GET['category'],$_GET['mapel'],$_GET['kompetensi']);
@@ -27,6 +28,11 @@ class Bank_soal extends CI_Controller
 		$this->data['cat_id']=$cat_id;
 		$this->data['categories']=$this->Categori_m->get_categories();
 		$this->data['halaman']="bank_soal/vsoal";
+		$mapel = $this->Mapel_m->tampil();
+		foreach($mapel as $row){
+			$this->data['mapel'][] = $row->nama_mapel;
+			$this->data['mapel_id'][] = $row->mapel_id;
+		}
 		$this->load->view('_main',$this->data);
 		}
 		else
@@ -36,10 +42,15 @@ class Bank_soal extends CI_Controller
 	}
 	public function addsoal ()
 	{
-		if ($this->session->userdata('level')=='superadmin') 
+		if ($this->session->userdata('level')=='superadmin')
 		{
 			$this->data['categories']=$this->Categori_m->get_categories();
 			$this->data['halaman']='addsoal';
+			$mapel = $this->Mapel_m->tampil();
+			foreach($mapel as $row){
+				$this->data['mapel'][] = $row->nama_mapel;
+				$this->data['mapel_id'][] = $row->mapel_id;
+			}
 			$this->load->view('_main',$this->data);
 		}else
 		{
@@ -82,7 +93,7 @@ class Bank_soal extends CI_Controller
 			show_404();
 		}
 		$have_sections=$this->db->get_where('kursus_sections',array('kursus_id'=>$id))->result();
-		if (!empty($have_sections)) 
+		if (!empty($have_sections))
 		{
 			$message='<div class="alert aler-danger">please delete sections</div>';
 			$this->session->set_flashdata('message',$message);
@@ -92,7 +103,7 @@ class Bank_soal extends CI_Controller
 			$kursus_id=$this->db->get_where('kursus',array('kursus_id'=>$id))->row()->kursus_id;
 			$this->db->where('kursus_id',$id);
 			$this->db->delete('kursus');
-			if ($this->db->affected_rows()==1) 
+			if ($this->db->affected_rows()==1)
 			{
 				$message ="sukses";
 			}else{
@@ -122,7 +133,7 @@ class Bank_soal extends CI_Controller
 		$this->data['halaman']="bank_soal/editsoal";
 		$this->load->view('_main',$this->data);
 	}
-	
+
 	private function nomor($no)
 	{
 		switch ($no) {
@@ -137,9 +148,9 @@ class Bank_soal extends CI_Controller
 	}
 	public function simpansoal()
 	{
-		
+
 		$this->form_validation->set_rules('mapel', 'Mapel', 'required');
-		$this->form_validation->set_rules('category', 'Category', 'required');
+		// $this->form_validation->set_rules('category', 'Category', 'required');
 		$this->form_validation->set_rules('kompetensi', 'Kompetensi', 'required');
 		$this->form_validation->set_rules('kesulitan', 'Kesulitan', 'required');
 		$this->form_validation->set_rules('soal', 'Soal', 'required');
@@ -151,7 +162,7 @@ class Bank_soal extends CI_Controller
 		}else{
 			$data=array(
 			'deskripsi'	=> $this->input->post('soal'),
-			'categori_id'	=>$this->input->post('category'),
+			// 'categori_id'	=>$this->input->post('category'),
 			'mapel_id'	=> $this->input->post('mapel'),
 			'kompetensi_id'	=> $this->input->post('kompetensi'),
 			'kesulitan'	=> $this->input->post('kesulitan'),
@@ -162,7 +173,7 @@ class Bank_soal extends CI_Controller
 			$save=$this->Soal_m->insert($data);
 			// echo json_encode($data);
 			if($save){
-				
+
 				if($this->input->post('tipe')=="Single"){
 					$correct = $this->input->post('correct_ans');
 					for($i=0;$i<5;$i++){
@@ -189,7 +200,7 @@ class Bank_soal extends CI_Controller
 						$save_d=$this->Soal_m->insert_array($data_d);
 					}
 				}
-				
+
 				$this->session->set_flashdata('pesan', 'Data Berhasil Di Tambah');
 			} else {
 				$this->session->set_flashdata('pesan', 'Gagal di tambah');
@@ -202,7 +213,7 @@ class Bank_soal extends CI_Controller
 	public function hapus_soal($id)
 	{
 		$data = array();
-        
+
         $this->Soal_m->deletesoal($id);
         $detail = $this->Soal_m->getsubcategori($id);
         $jml = count($detail);
@@ -222,13 +233,13 @@ class Bank_soal extends CI_Controller
 		$this->form_validation->set_rules('soal', 'Soal', 'required');
 		$this->form_validation->set_rules('tipe', 'Tipe Jawaban', 'required');
 		$this->form_validation->set_rules('nilai', 'Nilai benar', 'required');
-			
+
 			if($this->form_validation->run()==FALSE)
 			{
 				redirect('bank_soal/edit_soal_detail/$id','refresh');
 			}else
 			{
-	            
+
                 $data = array(
                     'deskripsi'	=> $this->input->post('soal'),
 					'categori_id'	=>$this->input->post('category'),
@@ -239,7 +250,7 @@ class Bank_soal extends CI_Controller
 					'nilai'	=> $this->input->post('nilai'),
 					'user_id'	=> $this->session->userdata('user_id'),
                 );
-            	
+
           	    $this->Soal_m->actionupdate($soal_id, $data);
 
           	    	if($this->input->post('tipe')=="Single"){

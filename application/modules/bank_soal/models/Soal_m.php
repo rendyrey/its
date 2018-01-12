@@ -1,15 +1,15 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Soal_m extends CI_Model { 
-    
+class Soal_m extends CI_Model {
+
     var $table='soal';
 	public function insert($data)
-    { 
+    {
         $this->db->insert($this->table,$data);
         return $this->db->insert_id();
     }
     public function insert_array($data)
-    { 
+    {
         $this->db->insert('soal_detail',$data);
         return $this->db->insert_id();
     }
@@ -19,7 +19,7 @@ class Soal_m extends CI_Model {
 		$query=$this->db->get();
 		return $query->result();
     }
-    
+
     public function delete($categori_id)
     {
         $this->db->where('categori_id',$categori_id);
@@ -45,7 +45,7 @@ class Soal_m extends CI_Model {
     }
     public function actionupdate($id,$data)
     {
-        
+
         $this->db->where('soal_id', $id);
         $this->db->update($this->table, $data);
     }
@@ -105,7 +105,7 @@ class Soal_m extends CI_Model {
     }
     public function get_subcategori_by_cat_id($id)
     {
-        
+
         $this->db->select('*');
         $this->db->where('categori_id', $id);
         $this->db->from('mapel');
@@ -184,7 +184,7 @@ class Soal_m extends CI_Model {
         }
         return TRUE;
     }
-   
+
     public function update_kursus_title($id,$upload_data='')
     {
         $info=array();
@@ -207,7 +207,7 @@ class Soal_m extends CI_Model {
         }
 
     }
-   
+
     public function get_materi_detail_m($id)
     {
         $hasil  = $this->db->select('*')
@@ -219,7 +219,7 @@ class Soal_m extends CI_Model {
                 ->row();
         return $hasil;
     }
-   
+
     public function ambil_materi()
     {
         $result=$this->db->select('*')
@@ -235,7 +235,7 @@ class Soal_m extends CI_Model {
     public function saranmateri()
     {
         $result=$this->db->select('*')
-                
+
                 ->from('hasillatihan')
                 ->join('tbl_latihan','tbl_latihan.title_id = hasillatihan.latihan_id','left')
                 ->join('categori','categori.categori_id = tbl_latihan.categori_id','left')

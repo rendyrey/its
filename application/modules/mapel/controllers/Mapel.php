@@ -1,10 +1,10 @@
 <?php if(!defined('BASEPATH')) exit('No direct access allowed');
 /**
-* 
+*
 */
 class Mapel extends CI_Controller
 {
-	
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -12,20 +12,18 @@ class Mapel extends CI_Controller
 		$this->load->model('Mapel_m');
 		//$this->load->model('Categori/Categori_m');
 	}
-	public function index($message='',$cat_id='')
+	public function index($message='')
 	{
 		$data=array();
 		$userid=$this->session->userdata('user_id');
 		//$this->data['categoris']=$this->Kursus_m->getsubcategori();
-		if ($this->session->userdata('level')=='superadmin') 
+		if ($this->session->userdata('level')=='superadmin')
 		{
-		if(isset($_GET['category']) && $_GET['category']!=''){
-			$this->data['mapel']=$this->Mapel_m->getallcat($_GET['cat_id']);
-		}else {
+
 			$this->data['mapel']=$this->Mapel_m->getall();
-		}
+
 		$this->data['message']=$message;
-		$this->data['cat_id']=$cat_id;
+		// $this->data['cat_id']=$cat_id;
 		$this->data['categories']=$this->Categori_m->get_categories();
 		$this->data['halaman']="mapel/vmapel";
 		$this->load->view('_main',$this->data);
@@ -37,9 +35,9 @@ class Mapel extends CI_Controller
 	}
 	public function addmapel ()
 	{
-		if ($this->session->userdata('level')=='superadmin') 
+		if ($this->session->userdata('level')=='superadmin')
 		{
-			$this->data['categories']=$this->Categori_m->get_categories();
+			// $this->data['categories']=$this->Categori_m->get_categories();
 			$this->data['halaman']='addmapel';
 			$this->load->view('_main',$this->data);
 		}else
@@ -68,23 +66,22 @@ class Mapel extends CI_Controller
 		$this->data['halaman']="mapel/editmapel";
 		$this->load->view('_main',$this->data);
 	}
-		
+
 	public function simpanmapel()
 	{
 		$this->form_validation->set_rules('mapel_title', 'Mapel', 'required');
-		$this->form_validation->set_rules('category', 'Category', 'required');
-		
+		// $this->form_validation->set_rules('category', 'Category', 'required');
+
 		if($this->form_validation->run()==FALSE){
 			echo "gagagl";
 		}else{
 			$data=array(
 			'nama_mapel'	=> $this->input->post('mapel_title'),
-			'by'			=>$this->session->userdata('username'),
-			'categori_id'	=>$this->input->post('category'),
+			'by'			=>$this->session->userdata('username')
 			);
 			$save=$this->Mapel_m->insert($data);
 			$this->session->set_flashdata('pesan', 'Data Berhasil Di Tambah');
-			redirect('mapel','refresh');	
+			redirect('mapel','refresh');
 		}
 	}
 	public function hapus_mapel($id)
@@ -100,23 +97,23 @@ class Mapel extends CI_Controller
 			$category= $this->input->post('category');
 			$mapel_title= $this->input->post('mapel_title');
 			$status= $this->input->post('status');
-			
+
 			$this->form_validation->set_rules('category','Category','required');
 			$this->form_validation->set_rules('mapel_title','Mapel Titla','required');
 			$this->form_validation->set_rules('status','Status','required');
-			
+
 			if($this->form_validation->run()==FALSE)
 			{
 				redirect('mapel/edit_mapel_detail/$id','refresh');
 			}else
 			{
-	            
+
                $data = array(
                 'nama_mapel' => $mapel_title,
                 'categori_id' => $category,
                 'active' => $status
                 );
-          	  
+
           	   $this->Mapel_m->actionupdate($mapel_id, $data);
                 $this->session->set_flashdata('pesan', 'Data Berhasil Di Update');
                 redirect('mapel');

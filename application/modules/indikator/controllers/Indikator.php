@@ -9,6 +9,7 @@ class Indikator  extends CI_Controller {
 		$this->load->model('pengguna/Pengguna_m');
     $this->load->model('categori/Categori_m');
 		$this->load->model('kompetensi_dasar/Kompetensi_m');
+    $this->load->model('mapel/Mapel_m');
 
 		$this->output->set_header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');
 		$this->output->set_header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
@@ -31,6 +32,11 @@ class Indikator  extends CI_Controller {
   		}
   		// $this->data['message']=$message;
   		// $this->data['cat_id']=$cat_id;
+      $mapel = $this->Mapel_m->tampil();
+  		foreach($mapel as $row){
+  			$this->data['mapel'][] = $row->nama_mapel;
+  			$this->data['mapel_id'][] = $row->mapel_id;
+  		}
   		$this->data['categories']=$this->Categori_m->get_categories();
   		$this->data['halaman']="indikator/vindikator";
   		$this->load->view('_main',$this->data);
