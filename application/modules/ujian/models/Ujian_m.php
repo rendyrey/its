@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Ujian_m extends CI_Model { 
-    
+class Ujian_m extends CI_Model {
+
     public function __construct()
     {
         parent::__construct();
@@ -11,7 +11,6 @@ class Ujian_m extends CI_Model {
         $result =$this->db->select('*')
                 ->select('tbl_ujian.active AS ujian_active')
                 ->from('tbl_ujian')
-                ->join('categori','categori.categori_id = tbl_ujian.categori_id','left')
                // ->join('categori','subcategori.cat_id = categori.categori_id','left')
                 //->join('subkelas','subkelas.id = tbl_ujian.kelas_id','left')
                 //->join('kelas','subkelas.kel_id = kelas.kelas_id','left')
@@ -20,8 +19,8 @@ class Ujian_m extends CI_Model {
                 ->result();
         return $result;
     }
-   
-    
+
+
     public function add_ujian_title($upload_data='')
     {
        // date_default_timezone_set($this->session->userdata['time_zone']);
@@ -34,7 +33,7 @@ class Ujian_m extends CI_Model {
         $info['nilai']      =$this->input->post('passing_score',TRUE);
         $info['ujian_created']  =date('Y-m-d H:i:s');
         $info['public']         =$this->input->post('public',TRUE);
-       
+
         $info['feature_image_name']   =($upload_data=='')?'':$upload_data;
         $info['last_modified_by']=$this->session->userdata('user_id');
         $if_exist=$this->db->get_where('tbl_ujian',array('judul_ujian'=>$info['judul_ujian']),1)->result();
@@ -43,7 +42,7 @@ class Ujian_m extends CI_Model {
         }else
         {
             $this->db->insert('tbl_ujian', $info);
-            if ($this->db->affected_rows()==1) 
+            if ($this->db->affected_rows()==1)
             {
                 return $this->db->insert_id();
             }else{
@@ -54,7 +53,7 @@ class Ujian_m extends CI_Model {
     public function update_ujian_m($id, $upload_data = '')
     {
         $info=array();
-        $info['categori_id']    =$this->input->post('category',TRUE);
+        // $info['categori_id']    =$this->input->post('category',TRUE);
         //$info['kelas_id']    =$this->input->post('kelas',TRUE);
         $info['judul_ujian']     =$this->input->post('ujian_title',TRUE);
         $info['user_id']        =$this->session->userdata('user_id',TRUE);
@@ -64,17 +63,17 @@ class Ujian_m extends CI_Model {
         $info['acak_soal']  =$this->input->post('random_per',TRUE);
         $info['ujian_created']  =date('Y-m-d H:i:s');
         $info['public']         =$this->input->post('public',TRUE);
-       
+
         //$info['feature_image_name']   =$upload_data;
         $info['last_modified_by']=$this->session->userdata('user_id');
 
-        
+
         if ($upload_data != '') {
             $info['feature_image_name'] = $upload_data;
         }
         $this->db->where('title_id',$id);
         $this->db->update('tbl_ujian',$info);
-        if ($this->db->affected_rows() == 1) 
+        if ($this->db->affected_rows() == 1)
         {
             return TRUE;
         }else{
@@ -98,7 +97,7 @@ class Ujian_m extends CI_Model {
             foreach ($opt as $key =>$option)
             {
                 $data['jawaban']=$option;
-                if (isset($r_jaw[$key]) && $r_jaw[$key]!='') 
+                if (isset($r_jaw[$key]) && $r_jaw[$key]!='')
                 {
                     $data['right_jaw']=1;
                 }else{
@@ -125,7 +124,7 @@ class Ujian_m extends CI_Model {
         $data['acak_soal']=$this->input->post('random_per',TRUE);
         $this->db->where('title_id',(int)$this->input->post('ujian_id',TRUE));
         $this->db->update('tbl_ujian',$data);
-        if ($this->db->affected_rows()==1) 
+        if ($this->db->affected_rows()==1)
         {
             return TRUE;
         }else
@@ -147,7 +146,7 @@ class Ujian_m extends CI_Model {
     }
     public function get_ujian_detail($id)
     {
-        if (!is_numeric($id)) 
+        if (!is_numeric($id))
         {
             return FALSE;
         }
@@ -184,13 +183,13 @@ class Ujian_m extends CI_Model {
     {
         $name=$this->input->post('name');
         $data=array();
-        if ($name == 'jaw-text') 
+        if ($name == 'jaw-text')
         {
             $data['jawaban']=$this->input->post('value',TRUE);
-        }elseif ($name=='right-jaw') 
+        }elseif ($name=='right-jaw')
         {
             $type=$this->db->get_where('pertanyaan',array('per_id'=>$per_id),1)->row();
-            if (($type->option_type=='Radio') && ($this->input->post('value',TRUE))==1) 
+            if (($type->option_type=='Radio') && ($this->input->post('value',TRUE))==1)
             {
                 $have   =$this->db->select('right_jaw')
                         ->from('jawaban')
@@ -198,7 +197,7 @@ class Ujian_m extends CI_Model {
                         ->where('right_jaw',1)
                         ->get()
                         ->row();
-                if ($have) 
+                if ($have)
                 {
                     return FALSE;
                 }else
@@ -216,7 +215,7 @@ class Ujian_m extends CI_Model {
         $this->db->where('per_id',$per_id);
         $this->db->where('jaw_id',(int) $this->input->post('pk'));
         $this->db->update('jawaban',$data);
-        if ($this->db->affected_rows() ==1) 
+        if ($this->db->affected_rows() ==1)
         {
             return TRUE;
         }else
@@ -270,7 +269,7 @@ class Ujian_m extends CI_Model {
     {
         $this->db->where('jaw_id',$id);
         $this->db->delete('jawaban');
-        if ($this->db->affected_rows()==1) 
+        if ($this->db->affected_rows()==1)
         {
             return TRUE;
         }else
@@ -293,8 +292,8 @@ class Ujian_m extends CI_Model {
     {
         $ujian_id = $this->input->post('ujian_id');
         $ujian_detail = $this->db->where('title_id', $ujian_id)->get('tbl_ujian')->row();
-       
-       
+
+
 
         $jawabans = $this->input->post('jaw');
         $right_jaw_count = 0;
@@ -356,7 +355,7 @@ class Ujian_m extends CI_Model {
             return FALSE;
         }
     }
-  
+
 
     public function delete_result($id)
     {
@@ -385,7 +384,7 @@ class Ujian_m extends CI_Model {
         $hasil      =$this->db->select('*')
                     ->where('title_id',$id)
                     ->from('tbl_ujian')
-                    ->join('categori','categori.categori_id=tbl_ujian.categori_id')
+                    // ->join('categori','categori.categori_id=tbl_ujian.categori_id')
                    // ->join('categori','subcategori.cat_id=categori.categori_id')
                     //->join('subkelas','subkelas.id=tbl_ujian.kelas_id')
                     //->join('kelas','subkelas.kel_id=kelas.kelas_id')

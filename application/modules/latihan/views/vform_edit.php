@@ -3,17 +3,17 @@
           <div class="page-content">
             <div class="row">
               <div class="col-xs-12">
-               
+
                     <div>
-                     
-             <?=$this->session->flashdata('pesan')?> 
-             
-             <?=form_open_multipart(site_url('latihan/update_latihan/'.$latihan->title_id), 'role="form" class="form-horizontal"');?>    
-             
+
+             <?=$this->session->flashdata('pesan')?>
+
+             <?=form_open_multipart(site_url('latihan/update_latihan/'.$latihan->title_id), 'role="form" class="form-horizontal"');?>
+
              <div class="form-group">
              <label class="col-sm-3 control-label no-padding-right" for="form-field-1" > Nama Latihan</label>
             <div class="col-sm-9">
-            <?php 
+            <?php
                     $data=array(
                         'name'        => 'latihan_title',
                         'placeholder' => 'latihan Title',
@@ -21,13 +21,13 @@
                         'value'       => $latihan->judul_latihan,
                         'rows'        => '2',
                         'class'       => 'col-xs-10 col-sm-5',
-                     
+
                       );
                    ?>
                    <?=form_textarea($data)?>
             </div>
           </div>
-<?php 
+<?php
            // $kelas=$this->db->get('kelas')->result();
             //$option=array();
             //foreach($kelas as $kelass){
@@ -42,32 +42,29 @@
          <!--<div class="control-group">
          <label class="control-label col-md-3" >Pilih Kelas</label>
          <div class="controls">
-            <?=form_dropdown('parent-kelas',$option,$latihan->kelas_id,'id="parent-kelas" class="form-control"')?>
          </div>
          </div> -->
 
          <!--<div class="control-group">
          <label class="control-label col-md-3" >Pilih Sub Kelas</label>
          <div class="controls">
-           <?=form_dropdown('kelas',$option2,$latihan->id,'id="kelas" class="form-control"')?>
          </div>
          </div> -->
-  <?php 
-            $categories=$this->db->get('categori')->result();
+  <?php
             $option=array();
-            foreach($categories as $category){
-              $option[$category->categori_id]=$category->nama_categori;
+            foreach($mapel as $map){
+              $option[$map->mapel_id]=$map->nama_mapel;
             }
-           
+
           ?>
            <div class="form-group">
-         <label class="col-sm-3 control-label no-padding-right"" >Pilih Mata Pelajaran</label>
+         <label class="col-sm-3 control-label no-padding-right" >Pilih Mata Pelajaran</label>
          <div class="col-sm-9">
-           <?=form_dropdown('category',$option,$latihan->categori_id,'id="category" class="col-xs-10 col-sm-5"')?>
+           <?=form_dropdown('mapel_id',$option,$latihan->mapel_id,'id="category" class="col-xs-10 col-sm-5"')?>
          </div>
          </div>
 
-          
+
            <div class="form-group">
          <label class="col-sm-3 control-label no-padding-right" >Foto</label>
          <div class="col-sm-9">
@@ -113,12 +110,11 @@ SImpan</button>
                       </div>
                     </div>
         <?=form_close()?>
-                  
-                  
+
+
                 </div>
               </div><!-- /.col -->
             </div><!-- /.row -->
           </div><!-- /.page-content -->
         </div>
 </div>
-

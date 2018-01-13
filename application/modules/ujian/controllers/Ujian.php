@@ -1,25 +1,25 @@
 <?php if(!defined('BASEPATH')) exit('No direct access allowed');
 /**
-* 
+*
 */
 class Ujian extends CI_Controller
 {
-	
+
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model('categori/Categori_m');
 		//$this->load->model('kelas/Kelas_m');
 		$this->load->model('Ujian_m');
+		$this->load->model('mapel/Mapel_m');
 		//$this->load->model('Categori/Categori_m');
 	}
 	public function index($message='')
 	{
 		$userid=$this->session->userdata('user_id')	;
 		$data=array();
-		$this->data['categories']=$this->Categori_m->get_categories();
 		//$this->data['kelas']=$this->Kelas_m->get_kelas();
-		if ($this->session->userdata('level')== 'superadmin') 
+		if ($this->session->userdata('level')== 'superadmin')
 		{
 			$this->data['ujian']=$this->Ujian_m->get_all_ujian();
 			$this->data['halaman']='ujian/vujian';
@@ -35,9 +35,9 @@ class Ujian extends CI_Controller
 		$userid=$this->session->userdata('user_id');
 		$data=array();
 		$this->data['message']=$message;
-		$this->data['cat_id']=$cat_id;
+		// $this->data['cat_id']=$cat_id;
 		$this->data['kel_id']=$kel_id;
-		$this->data['categories']=$this->Categori_m->get_categories();
+		// $this->data['categories']=$this->Categori_m->get_categories();
 		//$this->data['kelass']=$this->Kelas_m->get_kelas();
 		$this->data['halaman']='ujian/vujianform';
 		$this->load->view('_main',$this->data);
@@ -49,13 +49,13 @@ class Ujian extends CI_Controller
 		//$this->form_validation->set_rules('kelas','Kelas','required|integer');
 		$this->form_validation->set_rules('ujian_title','Ujian Title','required');
 		$this->form_validation->set_rules('passing_score','Passing Score','required');
-		if ($this->form_validation->run()==FALSE) 
+		if ($this->form_validation->run()==FALSE)
 		{
 			$this->tambah();
 		}else
 		{
 			$form_info=array();
-			if (!empty($_FILES['feature_image']['name'])) 
+			if (!empty($_FILES['feature_image']['name']))
 			{
 				$config['upload_path']		='./assets/upload/ujian/';
 				$config['allowed_types']	='gif|jpg|png|jpeg';
@@ -65,7 +65,7 @@ class Ujian extends CI_Controller
         		$config['max_width']  = '5000000';
         		$config['max_height']  = '5000000';
 				$this->load->library('upload', $config);
-				if (!$this->upload->do_upload('feature_image')) 
+				if (!$this->upload->do_upload('feature_image'))
 				{
 					echo "error";
 				}else
@@ -77,7 +77,7 @@ class Ujian extends CI_Controller
 			{
 				$title_id=$this->Ujian_m->add_ujian_title();
 			}
-			if ($title_id) 
+			if ($title_id)
 			{
 				$message='sukses';
 				$ujian_title=$this->input->post('ujian_title');
@@ -107,7 +107,7 @@ class Ujian extends CI_Controller
 		$this->form_validation->set_rules('jaw_type','jawaban type', 'required');
 		$this->form_validation->set_rules('options[1]','option1','required');
 		$this->form_validation->set_rules('options[2]','option2','required');
-		if ($this->form_validation->run()==FALSE) 
+		if ($this->form_validation->run()==FALSE)
 		{
 			//$a=$this->form_validation->display_errors();
 			echo validation_errors();
@@ -121,7 +121,7 @@ class Ujian extends CI_Controller
 			if(!empty($_FILES['media']['name']))
 			{
 				$config['upload_path']='./assets/upload/pertanyaan-media/'.$this->input->post('media_type').'/';
-				if ($this->input->post('media_type')=='image') 
+				if ($this->input->post('media_type')=='image')
 				{
 					$config['allowed_types']='gif|jpg|jpeg|png';
 				}
@@ -132,7 +132,7 @@ class Ujian extends CI_Controller
 				$config['file_name']=uniqid();
 				$config['overwrite']=TRUE;
 				$this->load->library('upload',$config);
-				if (!$this->upload->do_upload('media')) 
+				if (!$this->upload->do_upload('media'))
 				{
 					redirect(site_url('Ujian/add_more_pertanyaan/'.$this->input->post('per_id')));
 				}else
@@ -146,9 +146,9 @@ class Ujian extends CI_Controller
 				$file_name=$this->input->post('media');
 				$file_type=$this->input->post('media_type');
 			}
-			if ($this->Ujian_m->add_pertanyaan($file_name,$file_type)) 
+			if ($this->Ujian_m->add_pertanyaan($file_name,$file_type))
 			{
-				if ($this->input->post('done')) 
+				if ($this->input->post('done'))
 				{
 					//$message='sukses';
 					//nanti redirect ke sisni
@@ -184,12 +184,12 @@ class Ujian extends CI_Controller
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('duration','time duration','required|min_length[5]|max_length[8]');
 		$this->form_validation->set_rules('random_per','totalrandom pertanyaan','required|integer|less_than['.$per_count.']');
-		if ($this->form_validation->run()==FALSE) 
+		if ($this->form_validation->run()==FALSE)
 		{
 			$this->set_waktu_n_acak_per_no($this->input->post('ujian_id',TRUE),$this->input->post('ujian_title',TRUE));
 		}else
 		{
-			if ($this->Ujian_m->set_time_n_random_per_no()) 
+			if ($this->Ujian_m->set_time_n_random_per_no())
 			{
 				$message='sukses';
 				//echo $message;
@@ -205,14 +205,14 @@ class Ujian extends CI_Controller
 	}
 	public function ujiandetail($id, $message='')
 	{
-		if (!is_numeric($id)) 
+		if (!is_numeric($id))
 		{
 			show_404();
 		}
 		$data=array();
 		$this->data['message']=$message;
 		$this->data['ujian_title']=$this->Ujian_m->get_ujian_by_id($id);
-		if (!(empty($this->data['ujian_title'])) && (($this->session->userdata('level') == 'superadmin') OR ($this->data['ujian_title']->user_id == $this->session->userdata('user_id')))) 
+		if (!(empty($this->data['ujian_title'])) && (($this->session->userdata('level') == 'superadmin') OR ($this->data['ujian_title']->user_id == $this->session->userdata('user_id'))))
 		{
 			$this->data['ujians']=$this->Ujian_m->get_ujian_detail($id);
 			$this->data['ujian_jawaban']=$this->Ujian_m->get_ujian_jawaban($this->data['ujians']);
@@ -231,10 +231,10 @@ class Ujian extends CI_Controller
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('pertanyaan','Pertanyaan','required');
 		$ujian_id=$this->input->post('ujian_id',TRUE);
-		if ($this->form_validation->run()==FALSE) 
+		if ($this->form_validation->run()==FALSE)
 		{
 			echo "error";
-		}elseif ($this->Ujian_m->update_pertanyaan_m()) 
+		}elseif ($this->Ujian_m->update_pertanyaan_m())
 		{
 			$this->ujiandetail($ujian_id);
 		}else
@@ -248,12 +248,12 @@ class Ujian extends CI_Controller
 	}
  	public function add_more_pertanyaan($id='',$message='')
  	{
- 		if (!is_numeric($id)) 
+ 		if (!is_numeric($id))
  		{
  			show_404();
  		}
  		$ujian=$this->Ujian_m->get_ujian_title($id);
- 		if ((empty($ujian)) OR ($ujian->user_id != $this->session->userdata('user_id'))) 
+ 		if ((empty($ujian)) OR ($ujian->user_id != $this->session->userdata('user_id')))
  		{
  			$message= "hanya author yang bisa menambahkan";
  			$this->Ujian($message);
@@ -268,14 +268,14 @@ class Ujian extends CI_Controller
  	public function delete_pertanyaan ($id)
  	{
 		if (!is_numeric($id)) {
-			return FALSE; 		
+			return FALSE;
 		}
 		$author=$this->Ujian_m->get_pertanyaan_by_id($id);
 		if(empty($author) OR ($author->user_id != $this->session->userdata('user_id'))){
 			exit('kamu tidak berhak melakkan ini');
 		}
 		$per_id=$author->ujian_id;
-		if ($this->Ujian_m->delete_pertanyaan_dengan_jawaban($id)) 
+		if ($this->Ujian_m->delete_pertanyaan_dengan_jawaban($id))
 		{
 			$message='sukses dihapus';
 			$this->ujiandetail($per_id,$message);
@@ -295,7 +295,7 @@ class Ujian extends CI_Controller
  			exit('kamu tidak berhak melakkan ini');
  		}
  		$per_id=$author->ujian_id;
- 		if ($this->Ujian_m->delete_jawaban($id)) 
+ 		if ($this->Ujian_m->delete_jawaban($id))
  		{
  			$message="sukses";
  			$this->ujiandetail($per_id,$message);
@@ -308,15 +308,15 @@ class Ujian extends CI_Controller
  	}
  	public function delete_ujian($id)
  	{
- 		if (!is_numeric($id)) 
+ 		if (!is_numeric($id))
  		{
  			show_404();
  		}
  		$user_id=$this->session->userdata('user_id');
  		$level=$this->session->userdata('level');
- 		if ($level == 'superadmin') 
+ 		if ($level == 'superadmin')
  		{
- 			if ($this->Ujian_m->delete_ujian_dengan_pertanyaan($id)) 
+ 			if ($this->Ujian_m->delete_ujian_dengan_pertanyaan($id))
  			{
  				$message="sukses";
  				redirect('ujian',$message);
@@ -328,7 +328,7 @@ class Ujian extends CI_Controller
  		}else
  		{
  			$author=$this->Ujian_m->get_ujian_by_id($id);
- 			if (empty($author) OR ($level != 'superadmin') && ($author->user_id != $user_id)) 
+ 			if (empty($author) OR ($level != 'superadmin') && ($author->user_id != $user_id))
  			{
  				exit('anda tidak berhak');
  			}
@@ -340,6 +340,7 @@ class Ujian extends CI_Controller
  		$data=array();
  		$this->data['message']=$message;
  		$this->data['ujian']=$this->Ujian_m->get_ujian_detail_m($id);
+		$this->data['mapel']=$this->Mapel_m->tampil();
  		$this->data['per_count']=$this->Ujian_m->pertanyaan_count_by_id($id);
  		$this->data['halaman']='ujian/vform_edit';
  		$this->load->view('_main',$this->data);
@@ -360,7 +361,7 @@ class Ujian extends CI_Controller
 		}else
 		{
 			$form_info=array();
-			if (!empty($_FILES['feature_image']['name'])) 
+			if (!empty($_FILES['feature_image']['name']))
 			{
 				$config['upload_path']		='./assets/upload/ujian/';
 				$config['allowed_types']	='gif|jpg|png|jpeg';
@@ -370,7 +371,7 @@ class Ujian extends CI_Controller
         		$config['max_width']  = '5000000';
         		$config['max_height']  = '5000000';
 				$this->load->library('upload', $config);
-				if (!$this->upload->do_upload('feature_image')) 
+				if (!$this->upload->do_upload('feature_image'))
 				{
 					//$error=array('error'=>$this->display_errors());
 					echo "gagal";
@@ -386,24 +387,24 @@ class Ujian extends CI_Controller
 				$title_id=$this->Ujian_m->update_ujian_m($id);
 				//$title_id=$this->Ujian_m->update_ujian_m($upload_data['file_name']);
 			}
-			if ($title_id) 
+			if ($title_id)
 			{
 				$message='sukses';
 				$this->session->flashdata('message',$message);
-				redirect(base_url('ujian'));
+				redirect(site_url('ujian'));
 			}else
 			{
 				$message=mysql_error();
 				$this->session->set_flashdata('message',$message);
-				redirect(base_url('ujian/edit_ujian_detail/'.$id));
-				
+				redirect('ujian/edit_ujian_detail/'.$id);
+
 			}
 
 		}
  	}
  	public function nonaktif($id)
 	{
-		
+
 		if($this->Ujian_m->nonaktif_m($id))
 		{
 			redirect('ujian',$message);
@@ -411,11 +412,11 @@ class Ujian extends CI_Controller
 			echo "error";
 		}
 
-		
+
 	}
 	public function aktif($id)
 	{
-		
+
 		if($this->Ujian_m->aktif_m($id))
 		{
 			$message='sukses';
@@ -424,7 +425,7 @@ class Ujian extends CI_Controller
 			echo "error";
 		}
 
-		
+
 	}
 	public function hasil()
 	{
@@ -481,9 +482,9 @@ class Ujian extends CI_Controller
 				$data=array();
 				$this->data['message']=$message;
 				$this->data['hasilslatihan']=$author;
-				
+
 				//$this->data['halaman']='latihan/vcetaknilai';
-				
+
 				$this->load->helper('dompdf');
 				$cetak=$this->load->view('vcetaknilai',$this->data,true);
 				pdf_create($cetak,$this->data['hasilslatihan']->nama);

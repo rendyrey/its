@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Latihan_m extends CI_Model { 
-    
+class Latihan_m extends CI_Model {
+
     public function __construct()
     {
         parent::__construct();
@@ -11,7 +11,6 @@ class Latihan_m extends CI_Model {
         $result =$this->db->select('*')
                 ->select('tbl_latihan.active AS latihan_active')
                 ->from('tbl_latihan')
-                ->join('categori','categori.categori_id = tbl_latihan.categori_id','left')
                // ->join('categori','subcategori.cat_id = categori.categori_id','left')
                 //->join('subkelas','subkelas.id = tbl_latihan.kelas_id','left')
                 //->join('kelas','subkelas.kel_id = kelas.kelas_id','left')
@@ -20,8 +19,8 @@ class Latihan_m extends CI_Model {
                 ->result();
         return $result;
     }
-   
-    
+
+
     public function add_latihan_title($upload_data='')
     {
        // date_default_timezone_set($this->session->userdata['time_zone']);
@@ -34,7 +33,7 @@ class Latihan_m extends CI_Model {
         $info['nilai']      =$this->input->post('passing_score',TRUE);
         $info['latihan_created']  =date('Y-m-d H:i:s');
         $info['public']         =$this->input->post('public',TRUE);
-       
+
         $info['feature_image_name']   =($upload_data=='')?'':$upload_data;
         $info['last_modified_by']=$this->session->userdata('user_id');
         $if_exist=$this->db->get_where('tbl_latihan',array('judul_latihan'=>$info['judul_latihan']),1)->result();
@@ -43,7 +42,7 @@ class Latihan_m extends CI_Model {
         }else
         {
             $this->db->insert('tbl_latihan', $info);
-            if ($this->db->affected_rows()==1) 
+            if ($this->db->affected_rows()==1)
             {
                 return $this->db->insert_id();
             }else{
@@ -54,7 +53,7 @@ class Latihan_m extends CI_Model {
     public function update_latihan_m($id, $upload_data = '')
     {
         $info=array();
-        $info['categori_id']    =$this->input->post('category',TRUE);
+        // $info['categori_id']    =$this->input->post('category',TRUE);
        // $info['kelas_id']    =$this->input->post('kelas',TRUE);
         $info['judul_latihan']     =$this->input->post('latihan_title',TRUE);
         $info['user_id']        =$this->session->userdata('user_id',TRUE);
@@ -64,17 +63,17 @@ class Latihan_m extends CI_Model {
         $info['acak_soal']  =$this->input->post('random_per',TRUE);
         $info['latihan_created']  =date('Y-m-d H:i:s');
         $info['public']         =$this->input->post('public',TRUE);
-       
+
         //$info['feature_image_name']   =$upload_data;
         $info['last_modified_by']=$this->session->userdata('user_id');
 
-        
+
         if ($upload_data != '') {
             $info['feature_image_name'] = $upload_data;
         }
         $this->db->where('title_id',$id);
         $this->db->update('tbl_latihan',$info);
-        if ($this->db->affected_rows() == 1) 
+        if ($this->db->affected_rows() == 1)
         {
             return TRUE;
         }else{
@@ -98,7 +97,7 @@ class Latihan_m extends CI_Model {
             foreach ($opt as $key =>$option)
             {
                 $data['jawabanlatihan']=$option;
-                if (isset($r_jaw[$key]) && $r_jaw[$key]!='') 
+                if (isset($r_jaw[$key]) && $r_jaw[$key]!='')
                 {
                     $data['right_jaw']=1;
                 }else{
@@ -125,7 +124,7 @@ class Latihan_m extends CI_Model {
         $data['acak_soal']=$this->input->post('random_per',TRUE);
         $this->db->where('title_id',(int)$this->input->post('latihan_id',TRUE));
         $this->db->update('tbl_latihan',$data);
-        if ($this->db->affected_rows()==1) 
+        if ($this->db->affected_rows()==1)
         {
             return TRUE;
         }else
@@ -139,7 +138,7 @@ class Latihan_m extends CI_Model {
                 ->select("TIME_TO_SEC(tbl_latihan.durasi_waktu) AS duration")
                 ->from('tbl_latihan')
                 ->where('tbl_latihan.title_id',$id)
-                ->join('categori','categori.categori_id=tbl_latihan.categori_id','left')
+                // ->join('categori','categori.categori_id=tbl_latihan.categori_id','left')
                 //->join('categori','subcategori.cat_id=categori.categori_id','left')
                 ->get()
                 ->row();
@@ -147,7 +146,7 @@ class Latihan_m extends CI_Model {
     }
     public function get_latihan_detail($id)
     {
-        if (!is_numeric($id)) 
+        if (!is_numeric($id))
         {
             return FALSE;
         }
@@ -184,13 +183,13 @@ class Latihan_m extends CI_Model {
     {
         $name=$this->input->post('name');
         $data=array();
-        if ($name == 'jaw-text') 
+        if ($name == 'jaw-text')
         {
             $data['jawabanlatihan']=$this->input->post('value',TRUE);
-        }elseif ($name=='right-jaw') 
+        }elseif ($name=='right-jaw')
         {
             $type=$this->db->get_where('pertanyaanlatihan',array('per_id'=>$per_id),1)->row();
-            if (($type->option_type=='Radio') && ($this->input->post('value',TRUE))==1) 
+            if (($type->option_type=='Radio') && ($this->input->post('value',TRUE))==1)
             {
                 $have   =$this->db->select('right_jaw')
                         ->from('jawabanlatihan')
@@ -198,7 +197,7 @@ class Latihan_m extends CI_Model {
                         ->where('right_jaw',1)
                         ->get()
                         ->row();
-                if ($have) 
+                if ($have)
                 {
                     return FALSE;
                 }else
@@ -216,7 +215,7 @@ class Latihan_m extends CI_Model {
         $this->db->where('per_id',$per_id);
         $this->db->where('jaw_id',(int) $this->input->post('pk'));
         $this->db->update('jawabanlatihan',$data);
-        if ($this->db->affected_rows() ==1) 
+        if ($this->db->affected_rows() ==1)
         {
             return TRUE;
         }else
@@ -270,7 +269,7 @@ class Latihan_m extends CI_Model {
     {
         $this->db->where('jaw_id',$id);
         $this->db->delete('jawabanlatihan');
-        if ($this->db->affected_rows()==1) 
+        if ($this->db->affected_rows()==1)
         {
             return TRUE;
         }else
@@ -293,8 +292,8 @@ class Latihan_m extends CI_Model {
     {
         $latihan_id = $this->input->post('latihan_id');
         $latihan_detail = $this->db->where('title_id', $latihan_id)->get('tbl_latihan')->row();
-       
-       
+
+
 
         $jawabanslatihan = $this->input->post('jaw');
         $right_jaw_count = 0;
@@ -356,7 +355,7 @@ class Latihan_m extends CI_Model {
             return FALSE;
         }
     }
-  
+
 
     public function delete_result($id)
     {
@@ -385,7 +384,6 @@ class Latihan_m extends CI_Model {
         $hasillatihan      =$this->db->select('*')
                     ->where('title_id',$id)
                     ->from('tbl_latihan')
-                    ->join('categori','categori.categori_id=tbl_latihan.categori_id')
                    // ->join('categori','subcategori.cat_id=categori.categori_id')
                     //->join('subkelas','subkelas.id=tbl_latihan.kelas_id')
                     //->join('kelas','subkelas.kel_id=kelas.kelas_id')

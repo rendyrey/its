@@ -4,15 +4,16 @@
 */
 class Latihan extends CI_Controller
 {
-	
+
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model('categori/Categori_m');
+		$this->load->model('mapel/Mapel_m');
 		//$this->load->model('kelas/Kelas_m');
 		$this->load->model('Latihan_m');
-		
-		
+
+
 	}
 	public function index($message='')
 	{
@@ -20,7 +21,7 @@ class Latihan extends CI_Controller
 		$data=array();
 		$this->data['categories']=$this->Categori_m->get_categories();
 		//$this->data['kelas']=$this->Kelas_m->get_kelas();
-		if ($this->session->userdata('level')== 'superadmin') 
+		if ($this->session->userdata('level')== 'superadmin')
 		{
 			$this->data['latihan']=$this->Latihan_m->get_all_latihan();
 			$this->data['halaman']='latihan/vlatihan';
@@ -50,13 +51,13 @@ class Latihan extends CI_Controller
 		//$this->form_validation->set_rules('kelas','Kelas','required|integer');
 		$this->form_validation->set_rules('latihan_title','Latihan Title','required');
 		$this->form_validation->set_rules('passing_score','Passing Score','required');
-		if ($this->form_validation->run()==FALSE) 
+		if ($this->form_validation->run()==FALSE)
 		{
 			$this->tambah();
 		}else
 		{
 			$form_info=array();
-			if (!empty($_FILES['feature_image']['name'])) 
+			if (!empty($_FILES['feature_image']['name']))
 			{
 				$config['upload_path']		='./assets/upload/latihan/';
 				$config['allowed_types']	='gif|jpg|png|jpeg';
@@ -66,7 +67,7 @@ class Latihan extends CI_Controller
         		$config['max_width']  = '5000000';
         		$config['max_height']  = '5000000';
 				$this->load->library('upload', $config);
-				if (!$this->upload->do_upload('feature_image')) 
+				if (!$this->upload->do_upload('feature_image'))
 				{
 					echo "error";
 				}else
@@ -78,7 +79,7 @@ class Latihan extends CI_Controller
 			{
 				$title_id=$this->Latihan_m->add_latihan_title();
 			}
-			if ($title_id) 
+			if ($title_id)
 			{
 				$message='sukses';
 				$latihan_title=$this->input->post('latihan_title');
@@ -108,7 +109,7 @@ class Latihan extends CI_Controller
 		$this->form_validation->set_rules('jaw_type','jawaban type', 'required');
 		$this->form_validation->set_rules('options[1]','option1','required');
 		$this->form_validation->set_rules('options[2]','option2','required');
-		if ($this->form_validation->run()==FALSE) 
+		if ($this->form_validation->run()==FALSE)
 		{
 			//$a=$this->form_validation->display_errors();
 			echo validation_errors();
@@ -122,7 +123,7 @@ class Latihan extends CI_Controller
 			if(!empty($_FILES['media']['name']))
 			{
 				$config['upload_path']='./assets/upload/pertanyaan-media/'.$this->input->post('media_type').'/';
-				if ($this->input->post('media_type')=='image') 
+				if ($this->input->post('media_type')=='image')
 				{
 					$config['allowed_types']='gif|jpg|jpeg|png';
 				}
@@ -133,7 +134,7 @@ class Latihan extends CI_Controller
 				$config['file_name']=uniqid();
 				$config['overwrite']=TRUE;
 				$this->load->library('upload',$config);
-				if (!$this->upload->do_upload('media')) 
+				if (!$this->upload->do_upload('media'))
 				{
 					redirect(site_url('Latihan/add_more_pertanyaanlatihan/'.$this->input->post('per_id')));
 				}else
@@ -147,9 +148,9 @@ class Latihan extends CI_Controller
 				$file_name=$this->input->post('media');
 				$file_type=$this->input->post('media_type');
 			}
-			if ($this->Latihan_m->add_pertanyaanlatihan($file_name,$file_type)) 
+			if ($this->Latihan_m->add_pertanyaanlatihan($file_name,$file_type))
 			{
-				if ($this->input->post('done')) 
+				if ($this->input->post('done'))
 				{
 					//$message='sukses';
 					//nanti redirect ke sisni
@@ -185,12 +186,12 @@ class Latihan extends CI_Controller
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('duration','time duration','required|min_length[5]|max_length[8]');
 		$this->form_validation->set_rules('random_per','totalrandom pertanyaan','required|integer|less_than['.$per_count.']');
-		if ($this->form_validation->run()==FALSE) 
+		if ($this->form_validation->run()==FALSE)
 		{
 			$this->set_waktu_n_acak_per_no($this->input->post('latihan_id',TRUE),$this->input->post('latihan_title',TRUE));
 		}else
 		{
-			if ($this->Latihan_m->set_time_n_random_per_no()) 
+			if ($this->Latihan_m->set_time_n_random_per_no())
 			{
 				$message='sukses';
 				//echo $messagde;
@@ -206,14 +207,14 @@ class Latihan extends CI_Controller
 	}
 	public function latihandetail($id, $message='')
 	{
-		if (!is_numeric($id)) 
+		if (!is_numeric($id))
 		{
 			show_404();
 		}
 		$data=array();
 		$this->data['message']=$message;
 		$this->data['latihan_title']=$this->Latihan_m->get_latihan_by_id($id);
-		if (!(empty($this->data['latihan_title'])) && (($this->session->userdata('level') == 'superadmin') OR ($this->data['latihan_title']->user_id == $this->session->userdata('user_id')))) 
+		if (!(empty($this->data['latihan_title'])) && (($this->session->userdata('level') == 'superadmin') OR ($this->data['latihan_title']->user_id == $this->session->userdata('user_id'))))
 		{
 			$this->data['latihans']=$this->Latihan_m->get_latihan_detail($id);
 			$this->data['latihan_jawabanlatihan']=$this->Latihan_m->get_latihan_jawabanlatihan($this->data['latihans']);
@@ -232,10 +233,10 @@ class Latihan extends CI_Controller
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('pertanyaanlatihan','Pertanyaan','required');
 		$latihan_id=$this->input->post('latihan_id',TRUE);
-		if ($this->form_validation->run()==FALSE) 
+		if ($this->form_validation->run()==FALSE)
 		{
 			echo "error";
-		}elseif ($this->Latihan_m->update_pertanyaanlatihan_m()) 
+		}elseif ($this->Latihan_m->update_pertanyaanlatihan_m())
 		{
 			$this->latihandetail($latihan_id);
 		}else
@@ -249,12 +250,12 @@ class Latihan extends CI_Controller
 	}
  	public function add_more_pertanyaanlatihan($id='',$message='')
  	{
- 		if (!is_numeric($id)) 
+ 		if (!is_numeric($id))
  		{
  			show_404();
  		}
  		$latihan=$this->Latihan_m->get_latihan_title($id);
- 		if ((empty($latihan)) OR ($latihan->user_id != $this->session->userdata('user_id'))) 
+ 		if ((empty($latihan)) OR ($latihan->user_id != $this->session->userdata('user_id')))
  		{
  			$message= "hanya author yang bisa menambahkan";
  			$this->Latihan($message);
@@ -269,14 +270,14 @@ class Latihan extends CI_Controller
  	public function delete_pertanyaanlatihan ($id)
  	{
 		if (!is_numeric($id)) {
-			return FALSE; 		
+			return FALSE;
 		}
 		$author=$this->Latihan_m->get_pertanyaanlatihan_by_id($id);
 		if(empty($author) OR ($author->user_id != $this->session->userdata('user_id'))){
 			exit('kamu tidak berhak melakkan ini');
 		}
 		$per_id=$author->latihan_id;
-		if ($this->Latihan_m->delete_pertanyaanlatihan_dengan_jawabanlatihan($id)) 
+		if ($this->Latihan_m->delete_pertanyaanlatihan_dengan_jawabanlatihan($id))
 		{
 			$message='sukses dihapus';
 			$this->latihandetail($per_id,$message);
@@ -296,7 +297,7 @@ class Latihan extends CI_Controller
  			exit('kamu tidak berhak melakkan ini');
  		}
  		$per_id=$author->latihan_id;
- 		if ($this->Latihan_m->delete_jawabanlatihan($id)) 
+ 		if ($this->Latihan_m->delete_jawabanlatihan($id))
  		{
  			$message="sukses";
  			$this->latihandetail($per_id,$message);
@@ -309,15 +310,15 @@ class Latihan extends CI_Controller
  	}
  	public function delete_latihan($id)
  	{
- 		if (!is_numeric($id)) 
+ 		if (!is_numeric($id))
  		{
  			show_404();
  		}
  		$user_id=$this->session->userdata('user_id');
  		$level=$this->session->userdata('level');
- 		if ($level == 'superadmin') 
+ 		if ($level == 'superadmin')
  		{
- 			if ($this->Latihan_m->delete_latihan_dengan_pertanyaanlatihan($id)) 
+ 			if ($this->Latihan_m->delete_latihan_dengan_pertanyaanlatihan($id))
  			{
  				$message="sukses";
  				redirect('latihan',$message);
@@ -329,7 +330,7 @@ class Latihan extends CI_Controller
  		}else
  		{
  			$author=$this->Latihan_m->get_latihan_by_id($id);
- 			if (empty($author) OR ($level != 'superadmin') && ($author->user_id != $user_id)) 
+ 			if (empty($author) OR ($level != 'superadmin') && ($author->user_id != $user_id))
  			{
  				exit('anda tidak berhak');
  			}
@@ -340,6 +341,7 @@ class Latihan extends CI_Controller
  		if(!is_numeric($id)){show_404();}
  		$data=array();
  		$this->data['message']=$message;
+		$this->data['mapel'] = $this->Mapel_m->tampil();
  		$this->data['latihan']=$this->Latihan_m->get_latihan_detail_m($id);
  		$this->data['per_count']=$this->Latihan_m->pertanyaanlatihan_count_by_id($id);
  		$this->data['halaman']='latihan/vform_edit';
@@ -348,7 +350,7 @@ class Latihan extends CI_Controller
  	public function update_latihan($id,$message='')
  	{
  		$this->load->library('form_validation');
- 		$this->form_validation->set_rules('category','Category','required|integer');
+ 		// $this->form_validation->set_rules('category','Category','required|integer');
  		//$this->form_validation->set_rules('kelas','Kelas','required|integer');
 		$this->form_validation->set_rules('latihan_title','Latihan Title','required');
 		$this->form_validation->set_rules('passing_score','Passing Score','required');
@@ -361,7 +363,7 @@ class Latihan extends CI_Controller
 		}else
 		{
 			$form_info=array();
-			if (!empty($_FILES['feature_image']['name'])) 
+			if (!empty($_FILES['feature_image']['name']))
 			{
 				$config['upload_path']		='./assets/upload/latihan/';
 				$config['allowed_types']	='gif|jpg|png|jpeg';
@@ -371,7 +373,7 @@ class Latihan extends CI_Controller
         		$config['max_width']  = '5000000';
         		$config['max_height']  = '5000000';
 				$this->load->library('upload', $config);
-				if (!$this->upload->do_upload('feature_image')) 
+				if (!$this->upload->do_upload('feature_image'))
 				{
 					//$error=array('error'=>$this->display_errors());
 					echo "gagal";
@@ -387,24 +389,24 @@ class Latihan extends CI_Controller
 				$title_id=$this->Latihan_m->update_latihan_m($id);
 				//$title_id=$this->Ujian_m->update_ujian_m($upload_data['file_name']);
 			}
-			if ($title_id) 
+			if ($title_id)
 			{
 				$message='sukses';
 				$this->session->flashdata('message',$message);
-				redirect(base_url('latihan'));
+				redirect('latihan');
 			}else
 			{
 				$message=mysql_error();
 				$this->session->set_flashdata('message',$message);
-				redirect(base_url('latihan/edit_latihan_detail/'.$id));
-				
+				// redirect(base_url('latihan/edit_latihan_detail/'.$id));
+				echo "hai";
 			}
 
 		}
  	}
  	public function nonaktif($id)
 	{
-		
+
 		if($this->Latihan_m->nonaktif_m($id))
 		{
 			redirect('latihan',$message);
@@ -412,11 +414,11 @@ class Latihan extends CI_Controller
 			echo "error";
 		}
 
-		
+
 	}
 	public function aktif($id)
 	{
-		
+
 		if($this->Latihan_m->aktif_m($id))
 		{
 			$message='sukses';
@@ -425,7 +427,7 @@ class Latihan extends CI_Controller
 			echo "error";
 		}
 
-		
+
 	}
 	public function hasillatihan()
 	{
@@ -482,9 +484,9 @@ class Latihan extends CI_Controller
 				$data=array();
 				$this->data['message']=$message;
 				$this->data['hasilslatihan']=$author;
-				
+
 				//$this->data['halaman']='latihan/vcetaknilai';
-				
+
 				$this->load->helper('dompdf');
 				$cetak=$this->load->view('vcetaknilai',$this->data,true);
 				pdf_create($cetak,$this->data['hasilslatihan']->nama);

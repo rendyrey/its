@@ -3,17 +3,17 @@
           <div class="page-content">
             <div class="row">
               <div class="col-xs-12">
-               
+
                     <div>
-                     
-             <?=$this->session->flashdata('pesan')?> 
-    
-           <?=form_open_multipart(site_url('ujian/update_ujian/'.$ujian->title_id), 'role="form" class="form-horizontal"');?>    
-             
+
+             <?=$this->session->flashdata('pesan')?>
+
+           <?=form_open_multipart(site_url('ujian/update_ujian/'.$ujian->title_id), 'role="form" class="form-horizontal"');?>
+
              <div class="form-group">
              <label class="control-label col-md-3" > Nama Ujian</label>
             <div class="col-sm-9">
-            <?php 
+            <?php
                     $data=array(
                         'name'        => 'ujian_title',
                         'placeholder' => 'ujian Title',
@@ -21,13 +21,13 @@
                         'value'       => $ujian->judul_ujian,
                         'rows'        => '2',
                         'class'       => 'form-control',
-                     
+
                       );
                    ?>
                    <?=form_textarea($data)?>
             </div>
           </div>
-<?php 
+<?php
            // $kelas=$this->db->get('kelas')->result();
             //$option=array();
             //foreach($kelas as $kelass){
@@ -52,22 +52,21 @@
            <?=form_dropdown('kelas',$option2,$ujian->id,'id="kelas" class="form-control"')?>
          </div>
          </div>-->
-  <?php 
-            $categories=$this->db->get('categori')->result();
+  <?php
             $option=array();
-            foreach($categories as $category){
-              $option[$category->categori_id]=$category->nama_categori;
+            foreach($mapel as $map){
+              $option[$map->mapel_id]=$map->nama_mapel;
             }
-           
+
           ?>
            <div class="form-group">
          <label class="control-label col-md-3" >Pilih Mata Pelajaran</label>
          <div class="col-sm-9">
-           <?=form_dropdown('category',$option,$ujian->categori_id,'id="category" class="form-control"')?>
+           <?=form_dropdown('category',$option,$ujian->mapel_id,'id="category" class="form-control"')?>
          </div>
          </div>
 
-         
+
            <div class="form-group">
          <label class="control-label col-md-3" >Foto</label>
          <div class="col-sm-9">
@@ -113,11 +112,10 @@ SImpan</button>
                       </div>
                     </div>
         <?=form_close()?>
-                  
+
                 </div>
               </div><!-- /.col -->
             </div><!-- /.row -->
           </div><!-- /.page-content -->
         </div>
 </div>
-
