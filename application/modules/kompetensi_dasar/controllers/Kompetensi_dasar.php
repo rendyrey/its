@@ -114,7 +114,7 @@ class Kompetensi_dasar extends CI_Controller
 	public function edit_kompetensi_detail($id,$pesan='')
 	{
 		if(!is_numeric($id)){show_404();}
-		$this->data['categories']=$this->Categori_m->get_categories();
+		// $this->data['categories']=$this->Categori_m->get_categories();
 		$this->data['pesan']=$pesan;
 		$this->data['kompetensi']=$this->Kompetensi_m->get_kompetensi_detail($id);
 		$this->data['halaman']="kompetensi_dasar/editkompetensi";

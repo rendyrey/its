@@ -62,8 +62,8 @@
                             <td><?php echo ($indi->active==='1')?"<span class='btn btn-xs btn-success'>Aktif</span>":"<span class='btn btn-xs btn-danger'>Tidak Aktif</span>"; ?></td>
 
                             <td>
-<a class="btn btn-warning" href = " <?= site_url('indikator/edit_indikator/' . $indi->kompetensi_id)?>"><span class="glyphicon glyphicon-edit" title="Edit">Edit</span></a>
-<a onclick="return delete_confirmation()" class="btn btn-warning" href = " <?= site_url('kompetensi_dasar/hapus_kompetensi/' . $indi->kompetensi_id)?>"><span class="glyphicon glyphicon-edit" title="Edit">Delete</span></a>
+<a class="btn btn-warning" href = " <?= site_url('indikator/edit_indikator/' . $indi->id_indikator)?>"><span class="glyphicon glyphicon-edit" title="Edit">Edit</span></a>
+<a onclick="return delete_confirmation()" class="btn btn-warning" href = " <?= site_url('indikator/hapus_indikator/' . $indi->id_indikator)?>"><span class="glyphicon glyphicon-edit" title="Edit">Delete</span></a>
 
                                     </td>
                         </tr>

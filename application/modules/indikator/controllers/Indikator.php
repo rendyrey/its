@@ -100,6 +100,52 @@ class Indikator  extends CI_Controller {
 
 		}
 	}
+
+  public function hapus_indikator($id)
+	{
+		$data = array();
+
+        $this->Indikator_m->deleteindikator($id);
+        $this->session->set_flashdata('pesan', 'Berhasil Dihapus');
+        redirect('Indikator','refresh');
+	}
+
+  public function edit_indikator($id){
+    if(!is_numeric($id)){show_404();}
+		// $this->data['categories']=$this->Categori_m->get_categories();
+		// $this->data['pesan']=$pesan;
+		$this->data['indikator']=$this->Indikator_m->get_indikator_detail($id);
+		$this->data['halaman']="Indikator/editindikator";
+		$this->load->view('_main',$this->data);
+  }
+  public function update_indikator()
+  {
+      $id=$this->input->post('id_indikator');
+      $mapel= $this->input->post('mapel_id');
+      $nama_indikator= $this->input->post('nama_indikator');
+      $status=$this->input->post('status');
+
+      $this->form_validation->set_rules('mapel_id','Mapel','required');
+      $this->form_validation->set_rules('id_indikator','Indikator','required');
+      $this->form_validation->set_rules('status','Status','required');
+
+      if($this->form_validation->run()==FALSE)
+      {
+        redirect('Indikator/edit_indikator_detail/$id','refresh');
+      }else
+      {
+
+                $data = array(
+                    'nama_indikator' => $nama_indikator,
+                    'mapel_id' => $mapel,
+                    'active' => $status
+                );
+
+                $this->Indikator_m->actionupdate($id, $data);
+                $this->session->set_flashdata('pesan', 'Data Berhasil Di Update');
+                redirect('Indikator');
+      }
+  }
 }
 /* End of file ${TM_FILENAME:${1/(.+)/l.php/}} */
 /* Location: ./${TM_FILEPATH/.+((?:application).+)//:application/controllers/${1/(.+)/l.php/}} */

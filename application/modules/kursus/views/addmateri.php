@@ -14,17 +14,8 @@
            <input type="text" name="kursus_title" id="kursus_title" class="form-control">
             </div>
           </div>
-          <?php
-          $option=array();
-          $option['']='Pilih Category';
-          foreach ($categories as $categoriii)
-          {
-            if ($categoriii->active){
-              $option[$categoriii->categori_id]=$categoriii->nama_categori;
-            }
-          }
-          ?>
-        
+
+
 
           <div class="form-group">
             <label class="control-label col-md-3" >Deskripsi Materi</label>
@@ -48,7 +39,7 @@
              <div class="form-group">
             <label class="control-label col-md-3" >Pilih document</label>
             <div class="controls">
-           <?=form_upload('document','','id="document" class="form-control" required')?>
+           <?=form_upload('document','document','id="document" class="form-control" required')?>
             </div>
           </div>
 

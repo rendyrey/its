@@ -27,7 +27,7 @@
                         <tr class="<?=($i&1)?'even':'odd';?>">
                             <td>
                               <p class="lead"><?=$kurs->kursus_title?></p>
-                              <span class="text-muted">Categori :</span> <?=$kurs->nama_categori?></span>
+                              <span class="text-muted">
                               &nbsp;
 
 

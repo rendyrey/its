@@ -18,6 +18,30 @@ public function insert($data)
               ->result();
       return $result;
   }
+
+  public function deleteindikator($id)
+  {
+      $this->db->where('id_indikator',$id);
+      $this->db->delete($this->table);
+  }
+
+  public function get_indikator_detail($id)
+  {
+      $result =   $this->db->select('indikator.*, mapel.nama_mapel')
+                  ->where('id_indikator',$id)
+                  ->from('indikator')
+                  ->join('mapel','mapel.mapel_id=indikator.mapel_id','left')
+                  ->get()
+                  ->row();
+      return $result;
+  }
+
+  public function actionupdate($id,$data)
+  {
+
+      $this->db->where('id_indikator', $id);
+      $this->db->update($this->table, $data);
+  }
 }
 /* End of file ${TM_FILENAME:${1/(.+)/lIndikator_m.php/}} */
 /* Location: ./${TM_FILEPATH/.+((?:application).+)  /Indikator_m/:application/models/${1/(.+)/l.php/}} */

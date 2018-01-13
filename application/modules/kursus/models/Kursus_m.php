@@ -1,10 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Kursus_m extends CI_Model { 
-    
+class Kursus_m extends CI_Model {
+
     var $table='kursus';
 	public function insert($data)
-    { 
+    {
         $this->db->insert($this->table,$data);
         return $this->db->insert_id();
     }
@@ -34,7 +34,7 @@ class Kursus_m extends CI_Model {
     }
     public function actionupdate($id,$data)
     {
-        
+
         $this->db->where('kursus_id', $id);
         $this->db->update($this->table, $data);
     }
@@ -49,7 +49,7 @@ class Kursus_m extends CI_Model {
     {
         $result =$this->db->select('*')
                 ->from('kursus')
-                ->join('categori','categori.categori_id = kursus.categori_id','left')
+                // ->join('categori','categori.categori_id = kursus.categori_id','left')
                // ->join('categori','subcategori.cat_id = categori.categori_id','left')
                 //->join('user','user.id=kursus.created_by')
                 ->get()
@@ -64,7 +64,7 @@ class Kursus_m extends CI_Model {
     }
     public function get_subcategori_by_cat_id($id)
     {
-        
+
         $this->db->select('*');
         $this->db->where('cat_id', $id);
         $this->db->from('subcategori');
@@ -287,7 +287,7 @@ class Kursus_m extends CI_Model {
     public function saranmateri()
     {
         $result=$this->db->select('*')
-                
+
                 ->from('hasillatihan')
                 ->join('tbl_latihan','tbl_latihan.title_id = hasillatihan.latihan_id','left')
                 ->join('categori','categori.categori_id = tbl_latihan.categori_id','left')

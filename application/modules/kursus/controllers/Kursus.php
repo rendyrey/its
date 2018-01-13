@@ -1,10 +1,10 @@
 <?php if(!defined('BASEPATH')) exit('No direct access allowed');
 /**
-* 
+*
 */
 class Kursus extends CI_Controller
 {
-	
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -17,7 +17,7 @@ class Kursus extends CI_Controller
 		$data=array();
 		$userid=$this->session->userdata('user_id');
 		//$this->data['categoris']=$this->Kursus_m->getsubcategori();
-		if ($this->session->userdata('level')=='superadmin') 
+		if ($this->session->userdata('level')=='superadmin')
 		{
 		$this->data['kursus']=$this->Kursus_m->getall();
 		$this->data['message']=$message;
@@ -33,7 +33,7 @@ class Kursus extends CI_Controller
 	}
 	public function addmateri ()
 	{
-		if ($this->session->userdata('level')=='superadmin') 
+		if ($this->session->userdata('level')=='superadmin')
 		{
 			$this->data['categories']=$this->Categori_m->get_categories();
 			$this->data['halaman']='addmateri';
@@ -53,7 +53,7 @@ class Kursus extends CI_Controller
 		$this->form_validation->set_rules('target_audience','Sub Category','required');
 		$this->form_validation->set_rules('what_i_get','Sub Category','required');
 		//$this->form_validation->set_rules('price','Sub Category','required');
-		if ($this->form_validation->run()==FALSE) 
+		if ($this->form_validation->run()==FALSE)
 		{
 			echo "gagal";
 		}else
@@ -69,7 +69,7 @@ class Kursus extends CI_Controller
         		$config['max_width']  = '5000000';
         		$config['max_height']  = '5000000';
 				$this->load->library('upload', $config);
-				if (!$this->upload->do_upload('feature_image')) 
+				if (!$this->upload->do_upload('feature_image'))
 				{
 					echo "error";
 				}else
@@ -81,12 +81,12 @@ class Kursus extends CI_Controller
 			{
 				$title_id=$this->Kursus_m->add_kursus_title();
 			}
-			if ($title_id) 
+			if ($title_id)
 			{
 				$kursus_title=$this->input->post('kursus_title');
 				//$this->creat_kursus_sections($title_id,$kursus_title);
 				redirect('kursus','refresh');
-				
+
 			}
 			else
 			{
@@ -105,7 +105,7 @@ class Kursus extends CI_Controller
 		$this->form_validation->set_rules('target_audience','Sub Category','required');
 		$this->form_validation->set_rules('what_i_get','Sub Category','required');
 		//$this->form_validation->set_rules('price','Sub Category','required');
-		if ($this->form_validation->run()==FALSE) 
+		if ($this->form_validation->run()==FALSE)
 		{
 			$this->Kursus_m->update_kursus_title($id);
 		}else
@@ -121,11 +121,11 @@ class Kursus extends CI_Controller
         		$config['max_width']  = '5000000';
         		$config['max_height']  = '5000000';
 				$this->load->library('upload', $config);
-				if (!$this->upload->do_upload('feature_image')) 
+				if (!$this->upload->do_upload('feature_image'))
 				{
 					echo "error";
 				}else
-				{	
+				{
 					$upload_data=$this->upload->data();
 					$title_id=$this->Kursus_m->update_kursus_title($id,$upload_data['file_name']);
 				}
@@ -165,7 +165,7 @@ class Kursus extends CI_Controller
 			show_404();
 		}
 		$have_sections=$this->db->get_where('kursus_sections',array('kursus_id'=>$id))->result();
-		if (!empty($have_sections)) 
+		if (!empty($have_sections))
 		{
 			$message='<div class="alert aler-danger">please delete sections</div>';
 			$this->session->set_flashdata('message',$message);
@@ -175,7 +175,7 @@ class Kursus extends CI_Controller
 			$kursus_id=$this->db->get_where('kursus',array('kursus_id'=>$id))->row()->kursus_id;
 			$this->db->where('kursus_id',$id);
 			$this->db->delete('kursus');
-			if ($this->db->affected_rows()==1) 
+			if ($this->db->affected_rows()==1)
 			{
 				$message ="sukses";
 			}else{
@@ -219,19 +219,19 @@ class Kursus extends CI_Controller
 	{
 		$this->form_validation->set_rules('section[0]','Section Title 1','required');
 		$this->form_validation->set_rules('kursus_id','Kursus ID','required|integer');
-		if ($this->form_validation->run()==FALSE) 
+		if ($this->form_validation->run()==FALSE)
 		{
 			//$this->creat_kursus_sections($this->input->post('kursus_id'));
 			echo validation_errors();
 		}else
 		{
-			if ($this->Kursus_m->save_sections_m()) 
+			if ($this->Kursus_m->save_sections_m())
 			{
 				//$message="sukses";
 				//$this->session->set_flashdata('message',$message);
 				$this->data['sections']=$this->Kursus_m->get_sections($this->input->post('kursus_id'));
 				redirect(site_url('kursus/kursusdetail/'.$this->input->post('kursus_id')),$this->data);
-				
+
 			}else
 			{
 				//$this->addsections($this->input->post('kursus_id'),$this->input->post('kursus_title'));
@@ -381,7 +381,7 @@ class Kursus extends CI_Controller
 		if(!is_numeric($id)){show_404();}
 		//$adavideo=$this->db->get_where('kursus_videos',array('section_id'=>$id))->result();
 		$adadoc=$this->db->get_where('kursus_document',array('section_id'=>$id))->result();
-		if (!empty($adadoc)) 
+		if (!empty($adadoc))
 		{
 			$pesan='isi modul ini mempunyai Document, silahkan hapus document nya dulu';
 			$this->session->set_flashdata('pesan',$pesan);
@@ -408,7 +408,7 @@ class Kursus extends CI_Controller
 		$data=array();
 		$this->data['pesan']=$pesan;
 		$this->data['materi']=$this->Kursus_m->get_materi_detail_m($id);
-		
+
 		$this->data['doc']=$this->Kursus_m->get_materi_doc_m($id,$this->data['materi']->kursus_id);
 		$this->data['halaman']='kursus/vmateridetail';
 		$this->load->view('_main',$this->data);
@@ -450,7 +450,7 @@ class Kursus extends CI_Controller
 		$this->data['section_name']=$this->db->get_where('kursus_sections',array('section_id'=>$section_id))->row()->section_name;
 		$this->data['halaman']='kursus/vadddocumentmateri';
 		$this->load->view('_main',$this->data);
-		
+
 	}
 	public function upload_kursus_document_materi($pesan='')
 	{
@@ -502,21 +502,18 @@ class Kursus extends CI_Controller
 	public function simpanmateri()
 	{
 		$this->form_validation->set_rules('kursus_title', 'Username', 'required');
-		$this->form_validation->set_rules('category', 'Nama', 'required');
 		$this->form_validation->set_rules('kursus_intro', 'Email', 'required');
 		if($this->form_validation->run()==FALSE){
 			echo "gagagl";
 		}else{
-				$this->load->library('upload');
        			$nmfile = "file_".time();
         		$path   = './assets/upload/materi/';
         		$config['upload_path'] = $path;
-        		$config['allowed_types'] = 'docx|doc|pdf|txt|xls';
+        		$config['allowed_types'] = 'docx|doc|pdf|txt|xls|xlsx';
         		$config['overwrite']=TRUE;
-     			$config['max_size'] = '300000000000000';
-        		
+     				$config['max_size'] = '300000000000000';
         		$config['file_name'] = uniqid();
-				$this->upload->initialize($config);
+						$this->load->library('upload',$config);
 				if(!empty($_FILES['document']['name']))
 				{
 					if($this->upload->do_upload('document'))
@@ -524,18 +521,19 @@ class Kursus extends CI_Controller
 						$foto=$this->upload->data();
 
 						$data=array(
-						'document'	=>$foto['file_name'],
+						'document'	=> $foto['file_name'],
 						'kursus_title'	=> $this->input->post('kursus_title'),
-						'kursus_intro'	=> $this->input->post('kursus_intro'),
-						'categori_id'	=>$this->input->post('category'),
+						'kursus_intro'	=> $this->input->post('kursus_intro')
 					);
 					$save=$this->Kursus_m->insert($data);
 					redirect('kursus','refresh');
-					}
-				}else {
-					
+				}else{
+					echo $this->upload->display_errors();
 				}
-				
+				}else {
+					echo "belum tersiimpan 2";
+				}
+
 		}
 	}
 	public function hapus_materi($id)
@@ -558,12 +556,12 @@ class Kursus extends CI_Controller
 			$category= $this->input->post('category');
 			$kursus_title= $this->input->post('kursus_title');
 			$kursus_intro=$this->input->post('kursus_intro');
-			
+
 
 			$this->form_validation->set_rules('category','Category','required');
 			$this->form_validation->set_rules('kursus_title','Kursus Titla','required');
 			$this->form_validation->set_rules('kursus_intro','Kursus Intro','required');
-			
+
 			if($this->form_validation->run()==FALSE)
 			{
 				redirect('kursus/edit_kursus_detail/$id','refresh');
@@ -575,7 +573,7 @@ class Kursus extends CI_Controller
                 'allowed_types' => 'docx|doc|pdf|txt|xls',
                 'overwrite' => true,
                 'max_size' => "204800000000" // Can be set to particular file size , here it is 2 MB(2048 Kb)
-                
+
             );
 	            $this->load->library('Upload', $config);
             	$this->upload->initialize($config);
@@ -595,7 +593,7 @@ class Kursus extends CI_Controller
                     'kursus_title' => $kursus_title,
                     'kursus_intro' => $kursus_intro,
                     'categori_id' => $category
-                    
+
                 );
             	}else {
                 //$error = array('error' => $this->upload->display_errors());
