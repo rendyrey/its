@@ -2,10 +2,10 @@
         <div class="main-content-inner">
           <div class="page-content">
           <div class="page-header">
-              <?php 
+              <?php
                     if($ujian_title->user_id ==$this->session->userdata['user_id'])
                     { ?>
-                        <a class="btn custom_navbar-btn btn-info pull-right col-sm-2" href="<?=site_url('ujian/add_more_pertanyaan').'/'.$ujian_title->title_id;?>"><i class="glyphicon glyphicon-plus-sign"></i>Tambah Pertanyaan </a>                        
+                        <a class="btn custom_navbar-btn btn-info pull-right col-sm-2" href="<?=site_url('ujian/add_more_pertanyaan').'/'.$ujian_title->title_id;?>"><i class="glyphicon glyphicon-plus-sign"></i>Tambah Pertanyaan </a>
                   <?php
                     }
                    ?>
@@ -14,10 +14,10 @@
             <div class="row">
               <div class="col-xs-12">
             <h5>Judul Ujian: <?=(!empty($ujian_title)) ? $ujian_title->judul_ujian:'';?></h5>
-         
 
-             
-             <?=$this->session->flashdata('pesan')?> 
+
+
+             <?=$this->session->flashdata('pesan')?>
 
 <?php if(isset($ujians) != NULL) { ?>
               <table id="dynamic-table" class="table table-bordered data-table">
@@ -25,11 +25,12 @@
                              <tr>
                                <th>S1</th>
                                <th>Pertanyaan</th>
+                               <th>Materi</th>
                                <th class="sol-sm-3">Aksi</th>
                              </tr>
                            </thead>
                   <tbody>
-                  <?php 
+                  <?php
                               $i=1;
                               foreach($ujians as $ujian){
                              ?>
@@ -42,26 +43,40 @@
                                   <div class="accordion-body collapse" id="collapse_<?=$i;?>">
                                     <div class="accordion-inner"><br/>
                                       <p>
-                                        
-                                        
+
+
                                       </p>
-                                      <?php 
+                                      <?php
                                         if($ujian_jawaban[$ujian->per_id][0]){ ?>
                                         <table class="table table-bordered">
                                           <thead>
                                             <tr>
-                                              <th>s1</th>
+                                              <th>Choice</th>
                                               <th>Pilihan</th>
                                               <th>Jawaban Benar</th>
                                               <th style="width: 15%">Aksi</th>
                                             </tr>
                                           </thead>
-                                          <?php 
+                                          <?php
                                             foreach ($ujian_jawaban[$ujian->per_id] as $all_jaw):
                                               $sl=1;
-                                              foreach ($all_jaw as $jaw) :?>
+
+                                              foreach ($all_jaw as $jaw) :
+                                                if($sl == 1){
+                                                  $ch = "A";
+                                                }else if($sl ==2){
+                                                  $ch = "B";
+                                                }else if($sl == 3){
+                                                  $ch = "C";
+                                                }else if($sl == 4){
+                                                  $ch = "D";
+                                                }else if($sl == 5){
+                                                  $ch = "E";
+                                                }
+                                                ?>
+
                                               <tr>
-                                                <td style="width: 5%"><?=$sl;?></td>
+                                                <td style="width: 5%"><?=$ch;?></td>
                                                 <td>
                                                   <a href="#" data-name="jaw-text" datatype="textarea" data-rows="2" data-url="<?=site_url('ujian/update_jawaban/'.$ujian->per_id);?>" data-pk="<?=$jaw->jaw_id;?>" class="data-modify-<?=$jaw->jaw_id;?> no-style"><?=form_prep($jaw->jawaban);?></a>
                                                 </td>
@@ -74,7 +89,7 @@
                                                   <a class="btn btn-sm btn-default" onclick="return delete_confirmation();" href="<?=site_url('ujian/delete_jawaban/'.$jaw->jaw_id);?>">Hapus<i class="icon icon-trash"></i></a>
                                                 </td>
                                               </tr>
-                                              <?php 
+                                              <?php
                                               $sl++;
                                            endforeach;
                                            endforeach;
@@ -83,6 +98,7 @@
                                         <?php }else {echo "string";}?>
                                     </div>
                                   </div>
+                                  <td><?=$ujian->kursus_title;?></td>
                                 </td>
                                 <td class="col-xs-3">
                                   <div class="btn-group">
@@ -93,29 +109,29 @@
                                   </div>
                                 </td>
                              </tr>
-                             <?php 
+                             <?php
                               $i++;
                             }
                              ?>
                            </tbody>
               </table>
 
-<?php 
+<?php
                       } else {
                         echo "sdsada";
                       }
                       ?>
 
             </div>
-            
+
           </div>
         </div>
       </div>
     </div>
     <hr>
-    
-    
-    
+
+
+
   </div>
 <script type="text/javascript">
   function delete_confirmation (){

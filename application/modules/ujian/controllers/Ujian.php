@@ -12,6 +12,7 @@ class Ujian extends CI_Controller
 		//$this->load->model('kelas/Kelas_m');
 		$this->load->model('Ujian_m');
 		$this->load->model('mapel/Mapel_m');
+		$this->load->model('kursus/Kursus_m');
 		//$this->load->model('Categori/Categori_m');
 	}
 	public function index($message='')
@@ -74,7 +75,11 @@ class Ujian extends CI_Controller
 	public function pertanyaan_form($message='',$title_id,$ujian_title='create question',$pertanyaan_no=1)
 	{
 		$data=array();
-		$this->data['categories']=$this->Categori_m->get_categories();
+		// $this->data['categories']=$this->Categori_m->get_categories();
+		$this->data['kursus'] = $this->Kursus_m->tampil();
+		foreach($this->data['kursus'] as $row){
+			$this->data['kursus_opt'][$row->kursus_id] = $row->kursus_title;
+		}
 		$this->data['message']=$message;
 		$this->data['pertanyaan_no']=$pertanyaan_no;
 		$this->data['ujian_title']=$ujian_title;

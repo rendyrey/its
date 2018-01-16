@@ -5,24 +5,24 @@
           <div class="page-content">
             <div class="row">
               <div class="col-xs-12">
-           
+
                     <div>
-                     
-        
-             
-             
-             <?=$this->session->flashdata('pesan')?> 
+
+
+
+
+             <?=$this->session->flashdata('pesan')?>
 
           <?=form_open_multipart(site_url('ujian/create_pertanyaan'), 'role="form" class="form-horizontal"');?>
           <div id="hidden_fields"></div>
                 <input type="hidden" name="per_no" value="<?=$pertanyaan_no?>">
        <input type="hidden" name="per_id" value="<?=$title_id?>">
-       <input type="hidden" name="ujian_title" value="<?=$ujian_title?>">  
-             
+       <input type="hidden" name="ujian_title" value="<?=$ujian_title?>">
+
              <div class="form-group">
              <label class="col-sm-3 control-label no-padding-right" > Pertanyaan</label>
             <div class="col-sm-9">
-             <?php 
+             <?php
                     $data=array(
                         'name'        => 'pertanyaan',
                         'placeholder' => 'Pertanyaan',
@@ -30,11 +30,17 @@
                         'value'       => '',
                         'rows'        => '2',
                         'class'       => 'form-control',
-                     
+
                       );
                    ?>
                    <?=form_textarea($data)?>
             </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="upload-gambar">Materi</label>
+            <div class="col-sm-9">
+            <?=form_dropdown('kursus_id', $kursus_opt, '');?>
+          </div>
           </div>
            <div class="form-group" id="media-choose">
              <label class="col-sm-3 control-label no-padding-right" for="upload-gambar"> Upload Gambar</label>
@@ -55,9 +61,9 @@
             </div>
 
             <div class="form-group">
-            
+
               <div id="options"></div>
-            
+
             </div>
 
             <div class="form-group">
@@ -65,7 +71,7 @@
               <div id="progressBar" style="display: none;"><br> <img src="<?=base_url('assets/images/loading.gif')?>"></div>
             </div>
             </div>
-           
+
 
           <div class="form-group">
                       <div class="col">
@@ -74,7 +80,7 @@
                       </div>
                     </div>
         <?=form_close()?>
-                           
+
                 </div>
               </div><!-- /.col -->
             </div><!-- /.row -->
@@ -105,7 +111,7 @@ function add_media_field(val) {
     if (val == 'video') {
             var types = 'mp4 | webm | ogg';
     }else if (val == 'audio') {
-            var types = 'ogg | mp3 | wav';        
+            var types = 'ogg | mp3 | wav';
     }else if (val == 'image') {
             var types = 'gif | jpg | png';
     };
@@ -137,15 +143,15 @@ function add_form(val) {
         opt += '<p class="text-primary"><i class="glyphicon glyphicon-flash"></i><b> Input Jawaban</b></p>';
         opt += '</div></div>';
 
-    for (q = 1; q <= 4; q++) {
+    for (q = 1; q <= 5; q++) {
         opt += '<div class="form-group">';
         opt += '<label for="Pilihan[' + q + ']" class="col-sm-3 control-label no-padding-right">Pilihan ' + q + ': </label>';
-        
+
         opt += '<div class="col-sm-9">';
         opt += '<span class="control-label no-padding-left">'
         if (val == 'Radio') {
             opt += '<input type="' + val + '" name="jaw" onclick="put_right_jaw(' + q + ')" required="required"> Pilihan Benar <br>';
-        } 
+        }
         opt += '</span>';
         if (q <= 2) {
             opt += '<input name="options[' + q + ']" class="col-xs-10 col-sm-5" type="text" required="required"><br>';
@@ -180,7 +186,7 @@ function add_form(val) {
             str += '<input type="' + type + '" name="jaw" onclick="put_right_jaw(' + i + ')" required="required">  <span class="invisible-on-sm"> Jawaban Benar.</span>';
         } else if (type === 'checkbox') {
             str += '<input type="' + type + '" name="right_jaw[' + i + ']">  <span class="invisible-on-sm"> Correct Ans.</span>';
-        }    
+        }
         str += '</span>';
         str += '<input name="options[' + i + ']" class="form-control" type="text">';
         str += '</div></div></div><div id="add_more_field-' + (i + 1) + '"></div>';

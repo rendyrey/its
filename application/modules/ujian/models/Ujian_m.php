@@ -151,7 +151,10 @@ class Ujian_m extends CI_Model {
             return FALSE;
         }
         $this->db->where('ujian_id',$id);
-        $result=$this->db->get('pertanyaan')->result();
+        $this->db->from('pertanyaan');
+        $this->db->from('kursus');
+        $this->db->where('pertanyaan.kursus_id = kursus.kursus_id');
+        $result=$this->db->get()->result();
         return $result;
     }
     public function get_ujian_jawaban($info)
