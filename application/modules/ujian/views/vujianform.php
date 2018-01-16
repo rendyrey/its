@@ -3,17 +3,17 @@
           <div class="page-content">
             <div class="row">
               <div class="col-xs-12">
-                
+
                     <div>
-                     
-             <?=$this->session->flashdata('pesan')?> 
+
+             <?=$this->session->flashdata('pesan')?>
     <?=form_open_multipart(site_url('ujian/create_ujian'), 'role="form" class="form-horizontal"');?>
-                 
-             
+
+
              <div class="form-group">
              <label class="col-sm-3 control-label no-padding-right" > Nama Ujian</label>
             <div class="col-sm-9">
-            <?php 
+            <?php
                     $data=array(
                         'name'        => 'ujian_title',
                         'placeholder' => 'Ujian Title',
@@ -21,14 +21,14 @@
                         'value'       => '',
                         'rows'        => '2',
                         'class'       => 'col-xs-10 col-sm-5',
-                     
+
                       );
                    ?>
                    <?=form_textarea($data)?>
             </div>
           </div>
 
-           <?php 
+           <?php
            // $option=array();
             //$option['']='Pilih Kelas';
             //foreach ($kelass as $kelas){
@@ -53,23 +53,9 @@
          </div>
          </div> -->
 
-         <?php 
-            $option=array();
-            $option['']='Pilih Mata Pelajaran';
-            foreach ($categories as $category){
-              if($category->active){
-                $option[$category->categori_id]=$category->nama_categori;
-              }
-            }
-          ?>
-           <div class="form-group">
-         <label class="col-sm-3 control-label no-padding-right" >Pilih Category</label>
-         <div class="col-sm-9">
-           <?=form_dropdown('category',$option,'','id="category" class="col-xs-10 col-sm-5"')?>
-         </div>
-         </div>
 
-          
+    
+
 
            <div class="form-group">
          <label class="col-sm-3 control-label no-padding-right" >Foto</label>
@@ -102,7 +88,7 @@ Simpan</button>
                     </div>
         <?=form_close()?>
 
-                  
+
                 </div>
               </div><!-- /.col -->
             </div><!-- /.row -->
