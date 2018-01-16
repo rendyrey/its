@@ -25,15 +25,15 @@ class Ujian_m extends CI_Model {
     {
        // date_default_timezone_set($this->session->userdata['time_zone']);
         $info=array();
-        $info['categori_id']    =$this->input->post('category',TRUE);
-        //$info['kelas_id']    =$this->input->post('kelas',TRUE);
+        $info['mapel_id']    =$this->input->post('mapel_id',TRUE);
+        $info['kelas_id']    =0;
         $info['judul_ujian']     =$this->input->post('ujian_title',TRUE);
         $info['user_id']        =$this->session->userdata('user_id',TRUE);
-        //$info['syllabus']       =$this->input->post('ujian_syllabus',TRUE);
+        $info['syllabus']       ='silabus';
         $info['nilai']      =$this->input->post('passing_score',TRUE);
         $info['ujian_created']  =date('Y-m-d H:i:s');
         $info['public']         =$this->input->post('public',TRUE);
-
+        $info['jenis'] = $this->input->post('jenis');
         $info['feature_image_name']   =($upload_data=='')?'':$upload_data;
         $info['last_modified_by']=$this->session->userdata('user_id');
         $if_exist=$this->db->get_where('tbl_ujian',array('judul_ujian'=>$info['judul_ujian']),1)->result();
@@ -138,7 +138,7 @@ class Ujian_m extends CI_Model {
                 ->select("TIME_TO_SEC(tbl_ujian.durasi_waktu) AS duration")
                 ->from('tbl_ujian')
                 ->where('tbl_ujian.title_id',$id)
-                ->join('categori','categori.categori_id=tbl_ujian.categori_id','left')
+                // ->join('categori','categori.categori_id=tbl_ujian.categori_id','left')
                 //->join('categori','subcategori.cat_id=categori.categori_id','left')
                 ->get()
                 ->row();

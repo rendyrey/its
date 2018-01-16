@@ -45,38 +45,20 @@ class Ujian extends CI_Controller
 	public function create_ujian($message='')
 	{
 		$this->load->library('form_validation');
-		$this->form_validation->set_rules('category','Category','required|integer');
+		$this->form_validation->set_rules('mapel_id','Mapel','required');
 		//$this->form_validation->set_rules('kelas','Kelas','required|integer');
 		$this->form_validation->set_rules('ujian_title','Ujian Title','required');
 		$this->form_validation->set_rules('passing_score','Passing Score','required');
+		$this->form_validation->set_rules('jenis','Jenis','required');
+		$this->form_validation->set_rules('public','Public','required');
 		if ($this->form_validation->run()==FALSE)
 		{
 			$this->tambah();
 		}else
 		{
-			$form_info=array();
-			if (!empty($_FILES['feature_image']['name']))
-			{
-				$config['upload_path']		='./assets/upload/ujian/';
-				$config['allowed_types']	='gif|jpg|png|jpeg';
-				$config['file_name']		=uniqid();
-				$config['overwrite']		=TRUE;
-				$config['max_size'] = '3000000';
-        		$config['max_width']  = '5000000';
-        		$config['max_height']  = '5000000';
-				$this->load->library('upload', $config);
-				if (!$this->upload->do_upload('feature_image'))
-				{
-					echo "error";
-				}else
-				{
-					$upload_data=$this->upload->data();
-					$title_id=$this->Ujian_m->add_ujian_title($upload_data['file_name']);
-				}
-			}else
-			{
+
 				$title_id=$this->Ujian_m->add_ujian_title();
-			}
+
 			if ($title_id)
 			{
 				$message='sukses';
@@ -87,6 +69,7 @@ class Ujian extends CI_Controller
 				echo "gagal";
 			}
 		}
+
 	}
 	public function pertanyaan_form($message='',$title_id,$ujian_title='create question',$pertanyaan_no=1)
 	{
@@ -496,5 +479,14 @@ class Ujian extends CI_Controller
 	{
 		$this->Ujian_m->deletehasilujian($hasil_id);
 		echo json_encode(array("status"=>TRUE));
+	}
+
+	public function addujian(){
+		$this->data['mapel']=$this->Mapel_m->tampil();
+		foreach($this->data['mapel'] as $row){
+			$this->data['mata_pel'][$row->mapel_id] = $row->nama_mapel;
+		}
+		$this->data['halaman']='ujian/addujian';
+		$this->load->view('_main',$this->data);
 	}
 }
