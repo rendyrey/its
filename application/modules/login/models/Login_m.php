@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Login_m extends CI_Model { 
-	public function login($email, $password){ 
-		$password = md5($password); 
+class Login_m extends CI_Model {
+	public function login($email, $password){
+		$password = md5($password);
 		$this->db->where('email',$email);
         $this->db->where('password',$password);
         $query = $this->db->get('user');
@@ -16,6 +16,7 @@ class Login_m extends CI_Model {
                             'active'        =>$row->active,
                             'quis'          =>$row->quis,
                             'user_id'       =>$row->id,
+														'pretest'				=>$row->pretest,
                             'logged_in'     =>TRUE
                         );
             }
@@ -24,12 +25,12 @@ class Login_m extends CI_Model {
         }
         else{
             return FALSE;
-      }    
+      }
     }
     public function logout()
     {
-        
+
     }
-     
-    
+
+
 }

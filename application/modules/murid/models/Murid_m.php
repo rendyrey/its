@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Murid_m extends CI_Model { 
-    
+class Murid_m extends CI_Model {
+
     public function get_my_hasillatihan($id)
     {
         $hasil  =$this->db->select('*')
@@ -48,10 +48,16 @@ class Murid_m extends CI_Model {
                 ->from('hasillatihan')
                 ->where('hasillatihan.latihan_id',$latihan_id)
                 ->join('tbl_latihan','tbl_latihan.title_id = hasillatihan.latihan_id','left')
-              
+
                 ->get()
                 ->result();
         return $hasil;
     }
-    
+
+    public function update_pretest($id){
+      $this->db->set('pretest',1);
+      $this->db->where('id',$id);
+      $this->db->update('user');
+    }
+
 }

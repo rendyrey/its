@@ -86,6 +86,7 @@ class Login extends CI_Controller {
 						'nama'		=> $this->input->post('nama'),
 						'password'	=> md5($this->input->post('password')),
 						'email'		=> $this->input->post('email'),
+						'pretest' => 0,
 						'active'	=> 1,
 						'terdaftar_dari'=>date('Y-m-d H:i:s'),
 						'level'		=>'murid'

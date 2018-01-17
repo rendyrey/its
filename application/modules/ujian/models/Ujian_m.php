@@ -20,6 +20,20 @@ class Ujian_m extends CI_Model {
         return $result;
     }
 
+    public function get_all_pretest(){
+      $result =$this->db->select('*')
+              ->select('tbl_ujian.active AS ujian_active')
+              ->from('tbl_ujian')
+             // ->join('categori','subcategori.cat_id = categori.categori_id','left')
+              //->join('subkelas','subkelas.id = tbl_ujian.kelas_id','left')
+              //->join('kelas','subkelas.kel_id = kelas.kelas_id','left')
+              ->join('user','user.id = tbl_ujian.user_id')
+              ->where('jenis = 1')
+              ->get()
+              ->result();
+      return $result;
+    }
+
 
     public function add_ujian_title($upload_data='')
     {

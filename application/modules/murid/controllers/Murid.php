@@ -40,7 +40,7 @@ class Murid extends CI_Controller
 		}
 	}
 
-	public function materi ($pesan='')
+	public function materi($pesan='')
 
 	{
 
@@ -49,16 +49,29 @@ class Murid extends CI_Controller
 			redirect('login');
 		}
 		else {
+				if($this->session->userdata('pretest')==0){
+					$userid=$this->session->userdata('user_id');
+					$this->data['pesan']=$pesan;
+					$this->data['doc']=$this->Kursus_m->tampil();
+					//$this->data['hasils']=$this->Murid_m->saran($userid);
+					$this->data['hasils']=$this->Saran_m->tampil();
+				//	$this->data['hasilss']=$this->Murid_m->saran2($this->data['hasils']=$this->Murid_m->saran($userid));
+				// echo "Anda Belum Melakukan Pretest";
+					$this->data['halaman']='vmateri_blm';
+					$this->load->view('_murid',$this->data);
 
-				$userid=$this->session->userdata('user_id');
-				$this->data['pesan']=$pesan;
-				$this->data['doc']=$this->Kursus_m->tampil();
-				//$this->data['hasils']=$this->Murid_m->saran($userid);
-				$this->data['hasils']=$this->Saran_m->tampil();
-			//	$this->data['hasilss']=$this->Murid_m->saran2($this->data['hasils']=$this->Murid_m->saran($userid));
-				$this->data['halaman']='vmateri';
-				$this->load->view('_murid',$this->data);
-			}
+				}else{
+					$userid=$this->session->userdata('user_id');
+					$this->data['pesan']=$pesan;
+					$this->data['doc']=$this->Kursus_m->tampil();
+					//$this->data['hasils']=$this->Murid_m->saran($userid);
+					$this->data['hasils']=$this->Saran_m->tampil();
+				//	$this->data['hasilss']=$this->Murid_m->saran2($this->data['hasils']=$this->Murid_m->saran($userid));
+					$this->data['halaman']='vmateri';
+					$this->load->view('_murid',$this->data);
+
+				}
+							}
 
 	}
 

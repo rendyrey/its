@@ -1,6 +1,6 @@
 <?php if(!defined('BASEPATH'))exit('No direct access allowed');
 /**
-* 
+*
 */
 class Ujianmurid extends CI_Controller
 {
@@ -10,7 +10,7 @@ class Ujianmurid extends CI_Controller
 		parent::__construct();
 		$this->load->model('kursus/Kursus_m');
 		$this->load->model('ujian/Ujian_m');
-		$this->load->model('categori/Categori_m');
+		// $this->load->model('categori/Categori_m');
 		//$this->load->model('kelas/Kelas_m');
 		$this->load->model('murid/Murid_m');
 		$this->load->library('form_validation');
@@ -21,7 +21,7 @@ class Ujianmurid extends CI_Controller
 		{
 			exit('cant resubmit form');
 		}
-		if ($this->session->userdata('logged_in')==FALSE) 
+		if ($this->session->userdata('logged_in')==FALSE)
 		{
 			$this->session->set_userdata('back_url',current_url());
 			redirect('login','refresh');
@@ -33,12 +33,12 @@ class Ujianmurid extends CI_Controller
 			$this->hasil_detail($result_id);
 		}else
 		{
-			
+
 			$message='ada kesalahan';
 			$this->ujian($message);
 		}
 	}
-	
+
 	public function materi ($pesan='')
 
 	{
@@ -48,7 +48,7 @@ class Ujianmurid extends CI_Controller
 			redirect('login');
 		}
 		else {
-		
+
 				$userid=$this->session->userdata('user_id');
 				$this->data['pesan']=$pesan;
 				$this->data['doc']=$this->Kursus_m->ambil_materi();
@@ -57,18 +57,28 @@ class Ujianmurid extends CI_Controller
 				$this->data['halaman']='vmateri';
 				$this->load->view('_murid',$this->data);
 			}
-		
+
 	}
-	
-	
+
+
 	public function ujian($message="")
 	{
 		$data=array();
 		$this->data['ujian']=$this->Ujian_m->get_all_ujian();
-		$this->data['categories']=$this->Categori_m->getcategori();
+		// $this->data['categories']=$this->Categori_m->getcategori();
 		//$this->data['kelass']=$this->Kelas_m->getkelas();
 		$this->data['message']=$message;
 		$this->data['halaman']='vlistujian';
+		$this->load->view('_murid',$this->data);
+	}
+
+	public function pretest($message=""){
+		$data=array();
+		$this->data['ujian']=$this->Ujian_m->get_all_pretest();
+		// $this->data['categories']=$this->Categori_m->getcategori();
+		//$this->data['kelass']=$this->Kelas_m->getkelas();
+		$this->data['message']=$message;
+		$this->data['halaman']='ujianmurid/vlistujian_pretest';
 		$this->load->view('_murid',$this->data);
 	}
 	public function view_ujian_summery($id='',$message='')
@@ -132,7 +142,7 @@ class Ujianmurid extends CI_Controller
 		$this->data['no_contact_form']=TRUE;
 		$this->load->view('_murid',$this->data);
 	}
-	
+
 	public function hasil_detail($id='',$message='')
 	{
 		if(!$this->session->userdata('logged_in'))
@@ -153,6 +163,9 @@ class Ujianmurid extends CI_Controller
 			}else
 			{
 				$data=array();
+
+				$this->session->set_userdata('pretest',1);
+				$this->Murid_m->update_pretest($this->session->userdata('user_id'));
 				$this->data['message']=$message;
 				$this->data['hasils']=$author;
 				$this->data['halaman']='vhasil_detail';
@@ -198,5 +211,5 @@ class Ujianmurid extends CI_Controller
 			}
 		}
 	}
-	
+
 }
