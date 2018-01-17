@@ -206,16 +206,7 @@
               <b class="arrow"></b>
             </li>
 
-            <li class="">
-              <a href="<?=site_url('murid/latihan')?>">
-                <i class="menu-icon fa fa-pencil"></i>
-                <span class="menu-text">
-                  Latihan
-                </span>
-              </a>
 
-              <b class="arrow"></b>
-            </li>
             <li class="">
             <a href="<?=site_url('ujianmurid/ujian')?>">
               <i class="menu-icon fa fa-pencil-square-o"></i>
@@ -237,14 +228,7 @@
           <b class="arrow"></b>
 
           <ul class="submenu">
-            <li class="active">
-              <a href="<?=site_url('murid/hasil')?>">
-                <i class="menu-icon fa fa-caret-right"></i>
-                Hasil Latihan
-              </a>
-
-              <b class="arrow"></b>
-            </li>
+          
 
             <li class="">
               <a href="<?=site_url('ujianmurid/hasil')?>">
