@@ -63,13 +63,18 @@ class Ujianmurid extends CI_Controller
 
 	public function ujian($message="")
 	{
-		$data=array();
-		$this->data['ujian']=$this->Ujian_m->get_all_ujian();
-		// $this->data['categories']=$this->Categori_m->getcategori();
-		//$this->data['kelass']=$this->Kelas_m->getkelas();
-		$this->data['message']=$message;
-		$this->data['halaman']='vlistujian';
-		$this->load->view('_murid',$this->data);
+		if($this->session->userdata('pretest')==1){
+			$data=array();
+			$this->data['ujian']=$this->Ujian_m->get_all_ujian();
+			// $this->data['categories']=$this->Categori_m->getcategori();
+			//$this->data['kelass']=$this->Kelas_m->getkelas();
+			$this->data['message']=$message;
+			$this->data['halaman']='vlistujian';
+			$this->load->view('_murid',$this->data);
+		}else{
+			redirect('Murid/materi');
+		}
+
 	}
 
 	public function pretest($message=""){
