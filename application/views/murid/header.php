@@ -169,6 +169,30 @@
 
           </a>
           <ul class="submenu">
+            <?php
+
+              $db = mysqli_connect('localhost','root','','e-status');
+              $query = "select * from mapel";
+              $result = mysqli_query($db,$query);
+
+              while($row=mysqli_fetch_array($result)){
+                echo "<li class=''>
+                  <a href=".site_url('murid/materi').">
+                    <i class='menu-icon fa fa-desktop'></i>
+                    <span class='menu-text'>
+                      $row[nama_mapel]
+                    </span>
+
+
+                  </a>
+
+                  <b class='arrow'></b>
+                </li>";
+              }
+              // foreach($mapel as $row){
+              //
+              // }
+             ?>
             <li class="">
               <a href="<?=site_url('murid/materi')?>">
                 <i class="menu-icon fa fa-desktop"></i>
