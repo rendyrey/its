@@ -207,23 +207,9 @@ tr.even {
             </a>
             </li>
 
-            <li class="">
-            <a href="<?=site_url('bank_soal')?>">
-              <i class="menu-icon fa fa-archive"></i>
-              <span class="menu-text">
-               Bank Soal
-              </span>
-            </a>
-            </li>
+          
 
-            <li class="">
-            <a href="<?=site_url('latihan')?>">
-              <i class="menu-icon fa fa-pencil"></i>
-              <span class="menu-text">
-               Latihan
-              </span>
-            </a>
-            </li>
+
 
             <li class="">
             <a href="<?=site_url('ujian')?>">
@@ -245,14 +231,7 @@ tr.even {
             <b class="arrow"></b>
 
             <ul class="submenu">
-              <li class="active">
-                <a href="<?=site_url('latihan/hasillatihan')?>">
-                  <i class="menu-icon fa fa-caret-right"></i>
-                 Hasil Latihan
-                </a>
 
-                <b class="arrow"></b>
-              </li>
 
               <li class="">
                 <a href="<?=site_url('ujian/hasil')?>">
