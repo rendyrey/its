@@ -100,6 +100,7 @@ class Ujian_m extends CI_Model {
         $info['pertanyaan']=$this->input->post('pertanyaan',TRUE);
         $info['ujian_id']=$this->input->post('per_id',TRUE);
         $info['option_type']=$this->input->post('jaw_type',TRUE);
+        $info['kursus_id'] = $this->input->post('kursus_id');
         $info['media_type']=$file_type;
         $info['media_link']=$file_name;
         $this->db->insert('pertanyaan',$info);
