@@ -193,30 +193,31 @@
               //
               // }
              ?>
-            <li class="">
-              <a href="<?=site_url('murid/materi')?>">
-                <i class="menu-icon fa fa-desktop"></i>
-                <span class="menu-text">
-                  Modul Materi
-                </span>
 
-
-              </a>
-
-              <b class="arrow"></b>
-            </li>
-
-
-            <li class="">
-            <a href="<?=site_url('ujianmurid/ujian')?>">
-              <i class="menu-icon fa fa-pencil-square-o"></i>
-              <span class="menu-text">
-                Ujian
-              </span>
-            </a>
-          </li>
           </ul>
         </li>
+        <li class="">
+          <a href="<?=site_url('murid/materi')?>">
+            <i class="menu-icon fa fa-desktop"></i>
+            <span class="menu-text">
+              Modul Materi
+            </span>
+
+
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+
+
+        <li class="">
+        <a href="<?=site_url('ujianmurid/ujian')?>">
+          <i class="menu-icon fa fa-pencil-square-o"></i>
+          <span class="menu-text">
+            Ujian
+          </span>
+        </a>
+      </li>
         <li class="">
           <a href="#" class="dropdown-toggle">
             <i class="menu-icon fa fa-list"></i>
@@ -228,7 +229,7 @@
           <b class="arrow"></b>
 
           <ul class="submenu">
-          
+
 
             <li class="">
               <a href="<?=site_url('ujianmurid/hasil')?>">
